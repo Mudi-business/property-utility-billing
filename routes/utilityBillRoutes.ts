@@ -1,11 +1,14 @@
 "use strict";
 import express, { Request, Response } from "express";
+import Container from "typedi";
+import { UtilityBillService } from "../services/utilityBillService";
 const router = express.Router();
+const utilityBillInstance = Container.get(UtilityBillService);
 // const auth = require("../auth/auth");
 // const Protect = require("../auth/protectRoutesAuth");
 
 router.get(
-  "/utility/billing/pageable",
+  "/utility/bills/pageable",
   //   auth,
   //   Protect(),
   async (req: Request, res: Response) => {
@@ -33,12 +36,12 @@ router.get(
             schema: { $ref: "#/definitions/ResponseUtilityPageable" },
             description: 'OK' 
     } */
-    console.log("cool", req, res);
+    utilityBillInstance.getAllUtilityBills(req, res);
   }
 );
 
 router.get(
-  "/utility/billing/:id",
+  "/utility/bill/:id",
   //   auth,
   //   Protect(),
   (req: Request, res: Response) => {
@@ -53,12 +56,12 @@ router.get(
                schema: { $ref: "#/definitions/ResponseUtilityBill" },
                description: 'OK' 
         } */
-    console.log("cool", req, res);
+    utilityBillInstance.getUtilityBillById(req, res);
   }
 );
 
 router.post(
-  "/utility/billing",
+  "/utility/bill",
   // auth,
   //  Protect(),
   (req: Request, res: Response) => {
@@ -77,7 +80,7 @@ router.post(
                description: 'OK' 
         } */
     // console.log("headers :", req.headers);
-    console.log("cool", req, res);
+    utilityBillInstance.saveUtilityBill(req, res);
   }
 );
 

@@ -5,13 +5,13 @@ import { displaySwaggerEnumList } from "../utils/helpers";
 import { UtilityBillTypeEnum } from "../enums/utilityBill";
 
 module.exports = (sequelize: any, DataTypes: any) => {
-  class UtilityBillings extends Model {
+  class UtilityBills extends Model {
     static associate(_: any) {}
   }
 
-  UtilityBillings.init(
+  UtilityBills.init(
     {
-      utility_billing_id: {
+      utility_bill_id: {
         primaryKey: true,
         autoIncrement: false,
         allowNull: false,
@@ -19,19 +19,19 @@ module.exports = (sequelize: any, DataTypes: any) => {
         defaultValue: UUIDV4,
       },
       property_id: {
+        allowNull: false,
+        onDelete: "RESTRICT",
         type: DataTypes.UUID,
-        allowNull: false,
-        unique: true,
       },
-      utility_billing_amount: {
-        type: DataTypes.DOUBLE,
+      utility_bill_amount: {
+        type:DataTypes.DOUBLE,
         allowNull: false,
       },
-      utility_billing_type: {
+      utility_bill_type: {
         type: DataTypes.ENUM(displaySwaggerEnumList(UtilityBillTypeEnum)),
         allowNull: false,
       },
-      utility_billing_date:{
+      utility_bill_date:{
         type: DataTypes.DATE,
         allowNull: false,
       },
@@ -43,9 +43,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
     },
     {
       sequelize,
-      modelName: "UtilityBillings",
+      modelName: "UtilityBills",
     }
   );
 
-  return UtilityBillings;
+  return UtilityBills;
 };

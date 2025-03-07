@@ -5,11 +5,11 @@ const sequelize_1 = require("sequelize");
 const helpers_1 = require("../utils/helpers");
 const utilityBill_1 = require("../enums/utilityBill");
 module.exports = (sequelize, DataTypes) => {
-    class UtilityBillings extends sequelize_1.Model {
+    class UtilityBills extends sequelize_1.Model {
         static associate(_) { }
     }
-    UtilityBillings.init({
-        utility_billing_id: {
+    UtilityBills.init({
+        utility_bill_id: {
             primaryKey: true,
             autoIncrement: false,
             allowNull: false,
@@ -17,19 +17,19 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: sequelize_1.UUIDV4,
         },
         property_id: {
-            type: DataTypes.UUID,
             allowNull: false,
-            unique: true,
+            onDelete: "RESTRICT",
+            type: DataTypes.UUID,
         },
-        utility_billing_amount: {
+        utility_bill_amount: {
             type: DataTypes.DOUBLE,
             allowNull: false,
         },
-        utility_billing_type: {
+        utility_bill_type: {
             type: DataTypes.ENUM((0, helpers_1.displaySwaggerEnumList)(utilityBill_1.UtilityBillTypeEnum)),
             allowNull: false,
         },
-        utility_billing_date: {
+        utility_bill_date: {
             type: DataTypes.DATE,
             allowNull: false,
         },
@@ -40,8 +40,8 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: "UtilityBillings",
+        modelName: "UtilityBills",
     });
-    return UtilityBillings;
+    return UtilityBills;
 };
 //# sourceMappingURL=utilityBill.js.map

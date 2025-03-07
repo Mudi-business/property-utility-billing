@@ -13,10 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const typedi_1 = __importDefault(require("typedi"));
+const utilityBillService_1 = require("../services/utilityBillService");
 const router = express_1.default.Router();
+const utilityBillInstance = typedi_1.default.get(utilityBillService_1.UtilityBillService);
 // const auth = require("../auth/auth");
 // const Protect = require("../auth/protectRoutesAuth");
-router.get("/utility/billing/pageable", 
+router.get("/utility/bills/pageable", 
 //   auth,
 //   Protect(),
 (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -44,9 +47,9 @@ router.get("/utility/billing/pageable",
             schema: { $ref: "#/definitions/ResponseUtilityPageable" },
             description: 'OK'
     } */
-    console.log("cool", req, res);
+    utilityBillInstance.getAllUtilityBills(req, res);
 }));
-router.get("/utility/billing/:id", 
+router.get("/utility/bill/:id", 
 //   auth,
 //   Protect(),
 (req, res) => {
@@ -61,9 +64,9 @@ router.get("/utility/billing/:id",
                schema: { $ref: "#/definitions/ResponseUtilityBill" },
                description: 'OK'
         } */
-    console.log("cool", req, res);
+    utilityBillInstance.getUtilityBillById(req, res);
 });
-router.post("/utility/billing", 
+router.post("/utility/bill", 
 // auth,
 //  Protect(),
 (req, res) => {
@@ -82,7 +85,7 @@ router.post("/utility/billing",
                description: 'OK'
         } */
     // console.log("headers :", req.headers);
-    console.log("cool", req, res);
+    utilityBillInstance.saveUtilityBill(req, res);
 });
 module.exports = router;
 //# sourceMappingURL=utilityBillRoutes.js.map

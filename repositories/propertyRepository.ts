@@ -1,27 +1,24 @@
 import { Service } from "typedi";
-import { Request, Response } from "express";
-import { calculateTotalPages } from "../utils/helpers";
-import { ErrorStatusEnum } from "../enums/errorStatusEnum";
+import { PropertyFindAndCountAll, PropertyRequestDto, PropertyResponseDto } from "../dto/property";
 const db = require("../models");
+
 @Service()
 export class PropertyRepository {
-  findAll = async (req: Request, res: Response) => {
-    try {
-      const { page, size }: any = req.query;
-      const PageNo = parseInt(page);
-      const PageSize = parseInt(size);
-      const count = await db.Property.count();
-      const properties = await db.Property.findAll();
-//findAndCountAll
-      return res.status(ErrorStatusEnum.SUCESS).send({
-        properties: properties,
-        totalItems: count,
-        totalPages: calculateTotalPages(PageSize, count, properties),
-        pageNo: PageNo,
-        pageSize: PageSize,
-      });
-    } catch (error: any) {
-      return res.status(ErrorStatusEnum.INTERNAL_SERVER_ERRROR).send(error);
-    }
+  findAll = async (pageNo:number,pageSize:number) => {
+    const properties:PropertyFindAndCountAll = await db.Property.findAndCountAll({
+      offset: pageNo,
+      limit: pageSize,
+    });
+    return properties;
+  };
+
+  findById = async (id:string) => {
+    const property:PropertyResponseDto = await db.Property.findByPk(id);
+    return property;
+  };
+
+  save = async (body:PropertyRequestDto) => {
+    const property:PropertyResponseDto = await db.Property.create(body);
+    return property;
   };
 }

@@ -1,5 +1,5 @@
 import { PropertyTypeEnum } from "../../enums/property";
-import { displaySwaggerEnumList } from "../../utils/helpers";
+import { displaySwaggerEnumList, getDateWithTime } from "../../utils/helpers";
 
 export const requestPropertiesSwaggerDto = {
   property_name: "string",
@@ -8,23 +8,23 @@ export const requestPropertiesSwaggerDto = {
 };
 
 export const responsePropertySwaggerDto = {
-    property_id: "string",
+    property_id: "uuid",
     property_name: "string",
     property_address: "string",
     property_type: { "@enum": displaySwaggerEnumList(PropertyTypeEnum) },
-    createdAt: "date",
-    updateAt: "date",
+    createdAt: `${getDateWithTime(new Date())}`,
+    updateAt: `${getDateWithTime(new Date())}`,
   };
 
 export const responsePropertiesPageableSwaggerDto = {
   properties: [
     {
-        property_id: "string",
+        property_id: "uuid",
         property_name: "string",
         property_address: "string",
         property_type: { "@enum": displaySwaggerEnumList(PropertyTypeEnum) },
-        createdAt: "date",
-        updateAt: "date",
+        createdAt: `${getDateWithTime(new Date())}`,
+        updateAt:`${getDateWithTime(new Date())}`,
     },
   ],
   totalItems: 0,

@@ -49,16 +49,16 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.Property = require("./property")(sequelize, DataTypes);
-db.UtilityBilling = require("./utilityBill")(sequelize, DataTypes);
+db.UtilityBill = require("./utilityBill")(sequelize, DataTypes);
 
-db.Property.hasMany(db.UtilityBilling,{
+db.Property.hasMany(db.UtilityBill,{
   foreignKey: "property_id",
-  as: "UtilityBillings"
+  as: "UtilityBills"
 });
 
-db.UtilityBilling.belongsTo(db.Property,{
+db.UtilityBill.belongsTo(db.Property,{
   foreignKey: "property_id",
-  as: "Property"
+  as: "Properties"
 })
 
 

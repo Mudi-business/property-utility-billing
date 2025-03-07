@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 import { Container } from "typedi";
 import { PropertyService } from "../services/propertyService";
 const router = express.Router();
+const propertyInstance = Container.get(PropertyService);
 // const auth = require("../auth/auth");
 // const Protect = require("../auth/protectRoutesAuth");
 
@@ -35,8 +36,8 @@ router.get(
             schema: { $ref: "#/definitions/ResponsePropertyPageable" },
             description: 'OK' 
     } */
-    const serviceInstance = Container.get(PropertyService);
-    serviceInstance.getProperties(req, res);
+
+    propertyInstance.getAllProperties(req, res);
   }
 );
 
@@ -56,7 +57,7 @@ router.get(
                schema: { $ref: "#/definitions/ResponseProperty" },
                description: 'OK' 
         } */
-    console.log("cool", req, res);
+    propertyInstance.getPropertyById(req, res);
   }
 );
 
@@ -80,7 +81,7 @@ router.post(
                description: 'OK' 
         } */
     // console.log("headers :", req.headers);
-    console.log("cool", req, res);
+    propertyInstance.saveProperty(req, res);
   }
 );
 

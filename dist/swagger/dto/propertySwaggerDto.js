@@ -9,22 +9,22 @@ exports.requestPropertiesSwaggerDto = {
     property_type: { "@enum": (0, helpers_1.displaySwaggerEnumList)(property_1.PropertyTypeEnum) },
 };
 exports.responsePropertySwaggerDto = {
-    property_id: "string",
+    property_id: "uuid",
     property_name: "string",
     property_address: "string",
     property_type: { "@enum": (0, helpers_1.displaySwaggerEnumList)(property_1.PropertyTypeEnum) },
-    createdAt: "date",
-    updateAt: "date",
+    createdAt: `${(0, helpers_1.getDateWithTime)(new Date())}`,
+    updateAt: `${(0, helpers_1.getDateWithTime)(new Date())}`,
 };
 exports.responsePropertiesPageableSwaggerDto = {
     properties: [
         {
-            property_id: "string",
+            property_id: "uuid",
             property_name: "string",
             property_address: "string",
             property_type: { "@enum": (0, helpers_1.displaySwaggerEnumList)(property_1.PropertyTypeEnum) },
-            createdAt: "date",
-            updateAt: "date",
+            createdAt: `${(0, helpers_1.getDateWithTime)(new Date())}`,
+            updateAt: `${(0, helpers_1.getDateWithTime)(new Date())}`,
         },
     ],
     totalItems: 0,

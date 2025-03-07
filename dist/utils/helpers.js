@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.calculateTotalPages = void 0;
+exports.getDateWithTime = exports.getDateWithoutTime = exports.calculateTotalPages = void 0;
 exports.displaySwaggerEnumList = displaySwaggerEnumList;
 function displaySwaggerEnumList(enumList) {
     return Object.keys(enumList)
@@ -19,4 +19,12 @@ const calculateTotalPages = (pageSize, totalCount, dataLength) => {
     return totalCount < pageSize ? 1 : Math.ceil(totalCount / pageSize);
 };
 exports.calculateTotalPages = calculateTotalPages;
+const getDateWithoutTime = (date) => {
+    return require('moment')(date).format('YYYY-MM-DD');
+};
+exports.getDateWithoutTime = getDateWithoutTime;
+const getDateWithTime = (date) => {
+    return require('moment')(date).format('YYYY-MM-DD HH:mm:ss');
+};
+exports.getDateWithTime = getDateWithTime;
 //# sourceMappingURL=helpers.js.map

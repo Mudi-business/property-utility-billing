@@ -18,3 +18,13 @@ export const calculateTotalPages = (
   }
   return totalCount < pageSize ? 1 : Math.ceil(totalCount / pageSize);
 };
+
+
+export const getDateWithoutTime=(date:Date)=>{
+  return require('moment')(date).format('YYYY-MM-DD');
+}
+
+export const getDateWithTime=(date:Date)=>{
+  return require('moment')(date).format('YYYY-MM-DD HH:mm:ss');
+}
+

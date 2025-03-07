@@ -17,29 +17,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PropertyRepository = void 0;
 const typedi_1 = require("typedi");
-const helpers_1 = require("../utils/helpers");
-const errorStatusEnum_1 = require("../enums/errorStatusEnum");
 const db = require("../models");
 let PropertyRepository = class PropertyRepository {
     constructor() {
-        this.findAll = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { page, size } = req.query;
-                const PageNo = parseInt(page);
-                const PageSize = parseInt(size);
-                const count = yield db.Property.count();
-                const properties = yield db.Property.findAll();
-                return res.status(errorStatusEnum_1.ErrorStatusEnum.SUCESS).send({
-                    properties: properties,
-                    totalItems: count,
-                    totalPages: (0, helpers_1.calculateTotalPages)(PageSize, count, properties),
-                    pageNo: PageNo,
-                    pageSize: PageSize,
-                });
-            }
-            catch (error) {
-                return res.status(errorStatusEnum_1.ErrorStatusEnum.INTERNAL_SERVER_ERRROR).send(error);
-            }
+        this.findAll = (pageNo, pageSize) => __awaiter(this, void 0, void 0, function* () {
+            const properties = yield db.Property.findAndCountAll({
+                offset: pageNo,
+                limit: pageSize,
+            });
+            return properties;
+        });
+        this.findById = (id) => __awaiter(this, void 0, void 0, function* () {
+            const property = yield db.Property.findByPk(id);
+            return property;
+        });
+        this.save = (body) => __awaiter(this, void 0, void 0, function* () {
+            const property = yield db.Property.create(body);
+            return property;
         });
     }
 };

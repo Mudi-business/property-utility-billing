@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const typedi_1 = require("typedi");
 const propertyService_1 = require("../services/propertyService");
 const router = express_1.default.Router();
+const propertyInstance = typedi_1.Container.get(propertyService_1.PropertyService);
 // const auth = require("../auth/auth");
 // const Protect = require("../auth/protectRoutesAuth");
 router.get("/properties/pageable", 
@@ -46,8 +47,7 @@ router.get("/properties/pageable",
             schema: { $ref: "#/definitions/ResponsePropertyPageable" },
             description: 'OK'
     } */
-    const serviceInstance = typedi_1.Container.get(propertyService_1.PropertyService);
-    serviceInstance.getProperties(req, res);
+    propertyInstance.getAllProperties(req, res);
 }));
 router.get("/property/:id", 
 //   auth,
@@ -64,7 +64,7 @@ router.get("/property/:id",
                schema: { $ref: "#/definitions/ResponseProperty" },
                description: 'OK'
         } */
-    console.log("cool", req, res);
+    propertyInstance.getPropertyById(req, res);
 });
 router.post("/property", 
 // auth,
@@ -85,7 +85,7 @@ router.post("/property",
                description: 'OK'
         } */
     // console.log("headers :", req.headers);
-    console.log("cool", req, res);
+    propertyInstance.saveProperty(req, res);
 });
 module.exports = router;
 //# sourceMappingURL=propertyRoutes.js.map

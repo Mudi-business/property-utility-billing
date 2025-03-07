@@ -1,9 +1,10 @@
 "use strict";
 //MODULES
+import 'reflect-metadata';
 import express, { Express } from "express";
-// import dotenv from "dotenv";
-// import { AddDefaultDeduction } from "./utils/functions/defaults/AddDefualtDeduction";
-// dotenv.config();
+import dotenv from "dotenv";
+
+dotenv.config();
 const swaggerUi = require("swagger-ui-express");
 const app: Express = express();
 // const cors = require("cors");
@@ -11,9 +12,9 @@ const app: Express = express();
 // const Protect = require("./auth/protectRoutesAuth");
 
 //<==========================================================>
-const AllowanceRoutes = require("./views/AllowanceView");
-const AllowanceLevelsRoutes = require("./views/AllowanceLevelView");
-const payroll_swagger_json = require("./swagger/swagger-docs.json");
+const PropertyRoutes = require("./routes/propertyRoutes");
+const UtilityBillingRoutes = require("./routes/utilityBillRoutes");
+const swagger_json = require("./swagger/swagger-docs.json");
 const swaggerFile = require("./swagger/swagger_output.json");
 const db = require("./models/index.js");
 
@@ -27,20 +28,18 @@ const PORT = process.env.PORT;
 //support parsing of application/x-www-form-urlencoded post data
 app.use(express.urlencoded({ extended: true }));
 // support parsing of application/json type post data
-// app.use(bodyParser.json());
 app.use(express.json());
-app.use(express.urlencoded());
 app.use("/swagger-ui", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 //populate swagger docs in json format
-app.use("/", payroll_swagger_json);
+app.use("/", swagger_json);
 // app.use(auth);
 //END-MIDLEWARESs
 
 //Routes
 // app.use("/", Protect(["offline_access"]), brand_routes);
 //<==================================
-app.use("/", AllowanceRoutes);
-app.use("/", AllowanceLevelsRoutes);
+app.use("/", PropertyRoutes);
+app.use("/", UtilityBillingRoutes);
 //==================================>
 //Routes
 

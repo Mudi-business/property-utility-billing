@@ -1,0 +1,571 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ZRA CENTRALIZED AUTH SERVICE",
+    "description": "API FOR MANAGING CENTRALIZED AUTH SERVICE",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Mohamed Bakari Mohamed",
+      "email": "mohdbeka24@gmail.com",
+      "url": "web.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:7070",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/properties/pageable": {
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "summary": "Get Properties..",
+        "description": "Get all properties Pageable.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Number",
+            "required": true,
+            "value": "0",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page Size",
+            "required": true,
+            "value": "10",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePropertyPageable"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePropertyPageable"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/property/{id}": {
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "summary": "Get Property By Id..",
+        "description": "Get Property By Id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Property Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseProperty"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseProperty"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/property": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "summary": "Create Property..",
+        "description": "Create Property.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseProperty"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseProperty"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestProperty"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestProperty"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/utility/billing/pageable": {
+      "get": {
+        "tags": [
+          "UtilityBill"
+        ],
+        "summary": "Utility Bills..",
+        "description": "Utility bills pageable...",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page Number",
+            "required": true,
+            "value": "0",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page Size",
+            "required": true,
+            "value": "10",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseUtilityPageable"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseUtilityPageable"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/utility/billing/{id}": {
+      "get": {
+        "tags": [
+          "UtilityBill"
+        ],
+        "summary": "Get Utility Bill By Id..",
+        "description": "Get Utility Bill By Id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Utility Bill Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseUtilityBill"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseUtilityBill"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/utility/billing": {
+      "post": {
+        "tags": [
+          "UtilityBill"
+        ],
+        "summary": "Create Utility Bill..",
+        "description": "Create Utility Bill.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseUtilityBill"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseUtilityBill"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUtilityBill"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUtilityBill"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RequestProperty": {
+        "type": "object",
+        "properties": {
+          "property_name": {
+            "type": "string",
+            "example": "string"
+          },
+          "property_address": {
+            "type": "string",
+            "example": "string"
+          },
+          "property_type": {
+            "type": "string",
+            "enum": [
+              "RESIDENTIAL",
+              "COMMERCIAL"
+            ]
+          }
+        },
+        "xml": {
+          "name": "RequestProperty"
+        }
+      },
+      "ResponseProperty": {
+        "type": "object",
+        "properties": {
+          "property_id": {
+            "type": "string",
+            "example": "string"
+          },
+          "property_name": {
+            "type": "string",
+            "example": "string"
+          },
+          "property_address": {
+            "type": "string",
+            "example": "string"
+          },
+          "property_type": {
+            "type": "string",
+            "enum": [
+              "RESIDENTIAL",
+              "COMMERCIAL"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "date"
+          },
+          "updateAt": {
+            "type": "string",
+            "example": "date"
+          }
+        },
+        "xml": {
+          "name": "ResponseProperty"
+        }
+      },
+      "ResponsePropertyPageable": {
+        "type": "object",
+        "properties": {
+          "properties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "property_id": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "property_name": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "property_address": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "property_type": {
+                  "type": "string",
+                  "enum": [
+                    "RESIDENTIAL",
+                    "COMMERCIAL"
+                  ]
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "date"
+                },
+                "updateAt": {
+                  "type": "string",
+                  "example": "date"
+                }
+              }
+            }
+          },
+          "totalItems": {
+            "type": "number",
+            "example": 0
+          },
+          "totalPages": {
+            "type": "number",
+            "example": 0
+          },
+          "pageNo": {
+            "type": "number",
+            "example": 0
+          },
+          "pageSize": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "xml": {
+          "name": "ResponsePropertyPageable"
+        }
+      },
+      "RequestUtilityBill": {
+        "type": "object",
+        "properties": {
+          "property_id": {
+            "type": "string",
+            "example": "uuid"
+          },
+          "utility_billing_amount": {
+            "type": "number",
+            "example": 0
+          },
+          "utility_billing_type": {
+            "type": "string",
+            "enum": [
+              "ELECTRICITY",
+              "WATER",
+              "GAS"
+            ]
+          },
+          "utility_billing_date": {
+            "type": "string",
+            "example": "date"
+          }
+        },
+        "xml": {
+          "name": "RequestUtilityBill"
+        }
+      },
+      "ResponseUtilityBill": {
+        "type": "object",
+        "properties": {
+          "utility_billing_id": {
+            "type": "string",
+            "example": "uuid"
+          },
+          "property_id": {
+            "type": "string",
+            "example": "uuid"
+          },
+          "utility_billing_amount": {
+            "type": "number",
+            "example": 0
+          },
+          "utility_billing_type": {
+            "type": "string",
+            "enum": [
+              "ELECTRICITY",
+              "WATER",
+              "GAS"
+            ]
+          },
+          "utility_billing_date": {
+            "type": "string",
+            "example": "date"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "date"
+          },
+          "updateAt": {
+            "type": "string",
+            "example": "date"
+          }
+        },
+        "xml": {
+          "name": "ResponseUtilityBill"
+        }
+      },
+      "ResponseUtilityBillsPageable": {
+        "type": "object",
+        "properties": {
+          "properties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "utility_billing_id": {
+                  "type": "string",
+                  "example": "uuid"
+                },
+                "property_id": {
+                  "type": "string",
+                  "example": "uuid"
+                },
+                "utility_billing_amount": {
+                  "type": "number",
+                  "example": 0
+                },
+                "utility_billing_type": {
+                  "type": "string",
+                  "enum": [
+                    "ELECTRICITY",
+                    "WATER",
+                    "GAS"
+                  ]
+                },
+                "utility_billing_date": {
+                  "type": "string",
+                  "example": "date"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "date"
+                },
+                "updateAt": {
+                  "type": "string",
+                  "example": "date"
+                }
+              }
+            }
+          },
+          "totalItems": {
+            "type": "number",
+            "example": 0
+          },
+          "totalPages": {
+            "type": "number",
+            "example": 0
+          },
+          "pageNo": {
+            "type": "number",
+            "example": 0
+          },
+          "pageSize": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "xml": {
+          "name": "ResponseUtilityBillsPageable"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Bearer token to access all api endpoints",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}

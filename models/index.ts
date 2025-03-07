@@ -48,17 +48,17 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.Allowance = require("./Allowance")(sequelize, DataTypes);
-db.AssignedAllowance = require("./AssignedAllowance")(sequelize, DataTypes);
+db.Property = require("./property")(sequelize, DataTypes);
+db.UtilityBilling = require("./utilityBill")(sequelize, DataTypes);
 
-
-db.Deduction.hasMany(db.AssignedDeduction,{
-  foreignKey: "deduction_id",
-  as: "AssignedDeductions"
+db.Property.hasMany(db.UtilityBilling,{
+  foreignKey: "property_id",
+  as: "UtilityBillings"
 });
-db.AssignedDeduction.belongsTo(db.Deduction,{
-  foreignKey: "deduction_id",
-  as: "Deductions"
+
+db.UtilityBilling.belongsTo(db.Property,{
+  foreignKey: "property_id",
+  as: "Property"
 })
 
 

@@ -12,7 +12,7 @@ export class PropertyRepository {
       const PageSize = parseInt(size);
       const count = await db.Property.count();
       const properties = await db.Property.findAll();
-
+//findAndCountAll
       return res.status(ErrorStatusEnum.SUCESS).send({
         properties: properties,
         totalItems: count,

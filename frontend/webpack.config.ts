@@ -1,27 +1,29 @@
 const { EnvironmentPlugin } = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const TerserPlugin = require('terser-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const path = require('path');
+const TerserPlugin = require("terser-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const path = require("path");
 const deps = require("./package.json").dependencies;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-module.exports = function (webpackEnv:any) {
-  
-  const isEnvDevelopment = webpackEnv === 'development';
-  const isEnvProduction = webpackEnv === 'production';
+module.exports = function (webpackEnv: any) {
+  const isEnvDevelopment = webpackEnv === "development";
+  const isEnvProduction = webpackEnv === "production";
 
   return {
-    stats: 'errors-warnings',
+    entry: "./src/main.tsx",
+    stats: "errors-warnings",
     cache: true,
-    mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
-    devtool: isEnvProduction ? 'source-map' : isEnvDevelopment && 'inline-source-map',
+    mode: isEnvProduction ? "production" : isEnvDevelopment && "development",
+    devtool: isEnvProduction
+      ? "source-map"
+      : isEnvDevelopment && "inline-source-map",
     output: {
       publicPath: `${process.env.FRONTEND_URL}/`,
       path: path.resolve(__dirname, "dist"),
       filename: "[name].[contenthash].bundle.js",
-      clean:true
+      clean: true,
     },
     resolve: {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
@@ -36,7 +38,7 @@ module.exports = function (webpackEnv:any) {
       rules: [
         {
           test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.ttf$/, /\.otf$/],
-          type: 'asset',
+          type: "asset",
           parser: {
             dataUrlCondition: {
               maxSize: 1000,
@@ -56,27 +58,24 @@ module.exports = function (webpackEnv:any) {
         },
         {
           test: /\.(ts|tsx|js|jsx)$/,
-          include: path.resolve(__dirname, './src'),
+          include: path.resolve(__dirname, "./src"),
           exclude: /node_modules/,
-          use: [
-            'thread-loader',
-            'babel-loader'
-          ],
+          use: ["thread-loader", "babel-loader"],
         },
       ],
     },
     optimization: {
-      moduleIds: 'deterministic',
-      runtimeChunk: 'single',
+      moduleIds: "deterministic",
+      runtimeChunk: "single",
       usedExports: true,
       splitChunks: {
-          cacheGroups: {
-              vendor: {
-                  test: /[\\/]node_modules[\\/]/,
-                  name: 'vendors',
-                  chunks: 'all',
-              },
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendors",
+            chunks: "all",
           },
+        },
       },
       minimize: isEnvProduction,
       minimizer: [
@@ -103,13 +102,13 @@ module.exports = function (webpackEnv:any) {
                 ecma: 5,
                 comments: false,
                 ascii__only: true,
-              }
+              },
             },
-          
+
             // Use multi-process parallel running to improve the build speed
             parallel: true,
-          
-            // Enable file caching 
+
+            // Enable file caching
             cache: true,
           },
         }),
@@ -120,26 +119,8 @@ module.exports = function (webpackEnv:any) {
     plugins: [
       //new BundleAnalyzerPlugin(),
       new MiniCssExtractPlugin({
-        filename: 'static/css/[name].[contenthash:8].css',
-        chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-      }),
-      new ModuleFederationPlugin({
-        name: "fmtm",
-        filename: "remoteEntry.js",
-        remotes: {},
-        exposes: {},
-        shared: {
-          ...deps,
-          react: {
-            singleton: true,
-            requiredVersion: deps.react,
-          },
-          "react-dom": {
-            singleton: true,
-            requiredVersion: deps["react-dom"],
-            // requiredVersion: deps["react-dom", "@material-ui/core", "@material-ui/icons"],
-          },
-        },
+        filename: "static/css/[name].[contenthash:8].css",
+        chunkFilename: "static/css/[name].[contenthash:8].chunk.css",
       }),
       new HtmlWebPackPlugin(
         Object.assign(
@@ -150,24 +131,26 @@ module.exports = function (webpackEnv:any) {
             // favicon: './src/assets/images/favicon.png',
           },
           // Only for production
-          isEnvProduction ? {
-          minify: {
-            removeComments: true,
-            collapseWhitespace: true,
-            removeRedundantAttributes: true,
-            useShortDoctype: true,
-            removeEmptyAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            keepClosingSlash: true,
-            minifyJS: true,
-            minifyCSS: true,
-            minifyURLs: true
-          }
-        } : undefined
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
         )
       ),
 
       new EnvironmentPlugin(["FRONTEND_URL"]),
     ],
-  }
+  };
 };

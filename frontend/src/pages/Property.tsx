@@ -36,6 +36,7 @@ export const Property: React.FC = () => {
             <th>Name</th>
             <th>Address</th>
             <th>Type</th>
+            <th>More</th>
           </tr>
         </thead>
 
@@ -49,6 +50,7 @@ export const Property: React.FC = () => {
                     <td>{property?.property_name}</td>
                     <td>{property?.property_address}</td>
                     <td>{property?.property_type}</td>
+                    <td><button onClick={()=>navigate("utility/bills",{state:{data:property}})}>Bills</button></td>
                   </tr>
                 )
               )}

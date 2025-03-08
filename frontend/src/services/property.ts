@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PropertyDto, PropertyRequestDto } from "~/dto/property";
+import { PropertyRequestDto } from "~/dto/property";
 
 export const GET_ALL_PROPERTIES = function <T>({
   page,

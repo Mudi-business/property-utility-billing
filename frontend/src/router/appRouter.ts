@@ -4,6 +4,8 @@ import { LoginPage } from "../pages/login/LoginPage";
 import { Dashboard } from "../pages/Dashboard";
 import { Property } from "../pages/Property";
 import { PropertyComponent } from "../components/PropertyComponent";
+import { UtilityBill } from "../pages/UtilityBIll";
+import { UtilityBillComponent } from "../components/UtilityBillComponent";
 
 let appRouter = createBrowserRouter([
     {
@@ -47,6 +49,22 @@ let appRouter = createBrowserRouter([
         {
           path: "/home/properties/new/property",
           Component: PropertyComponent,
+          // loader: ({ request, params }) =>
+          //   fetch(`/api/show/${params.id}.json`, {
+          //     signal: request.signal,
+          //   }),
+        },
+        {
+          path: "/home/properties/utility/bills",
+          Component: UtilityBill,
+          // loader: ({ request, params }) =>
+          //   fetch(`/api/show/${params.id}.json`, {
+          //     signal: request.signal,
+          //   }),
+        },
+        {
+          path: "/home/properties/utility/bills/new/bill",
+          Component: UtilityBillComponent,
           // loader: ({ request, params }) =>
           //   fetch(`/api/show/${params.id}.json`, {
           //     signal: request.signal,

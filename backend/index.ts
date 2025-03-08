@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const swaggerUi = require("swagger-ui-express");
 const app: Express = express();
-// const cors = require("cors");
+const cors = require("cors");
 // const auth = require("./auth/auth");
 // const Protect = require("./auth/protectRoutesAuth");
 
@@ -29,6 +29,7 @@ const PORT = process.env.PORT;
 app.use(express.urlencoded({ extended: true }));
 // support parsing of application/json type post data
 app.use(express.json());
+app.use(cors())
 app.use("/swagger-ui", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 //populate swagger docs in json format
 app.use("/", swagger_json);

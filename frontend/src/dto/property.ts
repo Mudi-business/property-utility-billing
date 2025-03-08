@@ -10,7 +10,7 @@ export interface PropertyPageableDto {
 
 export interface PropertyDto {
   createdAt: Date;
-  created_by: Date;
+  created_by: string;
   property_address: string;
   property_id: string;
   property_name: string;

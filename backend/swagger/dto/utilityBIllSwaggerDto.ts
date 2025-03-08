@@ -23,7 +23,7 @@ export const responseUtilityBillSwaggerDto = {
 };
 
 export const responseUtilityBillsPageableSwaggerDto = {
-  properties: [
+  bills: [
     {
       utility_billing_id: "uuid",
       property_id: "uuid",

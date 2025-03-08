@@ -12,7 +12,7 @@ module.exports = function (webpackEnv: any) {
   const isEnvProduction = webpackEnv === "production";
 
   return {
-    entry: "./src/main.tsx",
+    entry: "./src/index.ts",
     stats: "errors-warnings",
     cache: true,
     mode: isEnvProduction ? "production" : isEnvDevelopment && "development",

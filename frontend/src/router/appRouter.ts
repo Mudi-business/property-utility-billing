@@ -3,6 +3,7 @@ import { MainView } from "../pages/main/MainView";
 import { LoginPage } from "../pages/login/LoginPage";
 import { Dashboard } from "../pages/Dashboard";
 import { Property } from "../pages/Property";
+import { PropertyComponent } from "../components/PropertyComponent";
 
 let appRouter = createBrowserRouter([
     {
@@ -38,6 +39,14 @@ let appRouter = createBrowserRouter([
         {
           path: "/home/properties",
           Component: Property,
+          // loader: ({ request, params }) =>
+          //   fetch(`/api/show/${params.id}.json`, {
+          //     signal: request.signal,
+          //   }),
+        },
+        {
+          path: "/home/properties/new/property",
+          Component: PropertyComponent,
           // loader: ({ request, params }) =>
           //   fetch(`/api/show/${params.id}.json`, {
           //     signal: request.signal,

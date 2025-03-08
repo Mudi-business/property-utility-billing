@@ -150,7 +150,7 @@ module.exports = function (webpackEnv: any) {
         )
       ),
 
-      new EnvironmentPlugin(["FRONTEND_URL"]),
+      new EnvironmentPlugin(["FRONTEND_URL","API_URL"]),
     ],
   };
 };

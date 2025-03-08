@@ -7,7 +7,7 @@ const path = require('path');
 const deps = require("./package.json").dependencies;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-module.exports = function (webpackEnv) {
+module.exports = function (webpackEnv:any) {
   
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
@@ -16,11 +16,9 @@ module.exports = function (webpackEnv) {
     stats: 'errors-warnings',
     cache: true,
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
-    // Stop compilation early in production
-    // bail: isEnvProduction,
     devtool: isEnvProduction ? 'source-map' : isEnvDevelopment && 'inline-source-map',
     output: {
-      publicPath: `${process.env.FRONTEND_MAIN_URL}/`,
+      publicPath: `${process.env.FRONTEND_URL}/`,
       path: path.resolve(__dirname, "dist"),
       filename: "[name].[contenthash].bundle.js",
       clean:true
@@ -30,9 +28,9 @@ module.exports = function (webpackEnv) {
     },
     devServer: {
       host: "0.0.0.0",
-      port: `${new URL(process.env.FRONTEND_MAIN_URL).port}`,
+      port: 8080,
       historyApiFallback: true,
-      allowedHosts: [`${process.env.FRONTEND_MAIN_URL}`],
+      allowedHosts: [`${process.env.FRONTEND_URL}`],
     },
     module: {
       rules: [
@@ -128,26 +126,8 @@ module.exports = function (webpackEnv) {
       new ModuleFederationPlugin({
         name: "fmtm",
         filename: "remoteEntry.js",
-        remotes: {
-           map: `fmtm_openlayer_map@${process.env.FRONTEND_MAP_URL}/remoteEntry.js`,
-        },
-        exposes: {
-          "./ThemeSlice": "./src/store/slices/ThemeSlice.ts",
-          "./HomeSlice": "./src/store/slices/HomeSlice.ts",
-          "./CommonSlice": "./src/store/slices/CommonSlice.ts",
-          "./LoginSlice": "./src/store/slices/LoginSlice.ts",
-          "./ProjectSlice": "./src/store/slices/ProjectSlice.ts",
-          "./Store": "./src/store/Store.js",
-          "./BasicCard": "./src/utilities/BasicCard.tsx",
-          "./CustomizedMenus": "./src/utilities/CustomizedMenus.tsx",
-          "./CustomizedSnackbar": "./src/utilities/CustomizedSnackbar.jsx",
-          "./PrimaryAppBar": "./src/utilities/PrimaryAppBar.tsx",
-          "./environment": "./src/environment.ts",
-          "./WindowDimension": "./src/hooks/WindowDimension.tsx",
-          "./OnScroll": "./src/hooks/OnScroll.tsx",
-          "./CoreModules": "./src/shared/CoreModules.js",
-          "./AssetModules": "./src/shared/AssetModules.js"
-        },
+        remotes: {},
+        exposes: {},
         shared: {
           ...deps,
           react: {
@@ -167,7 +147,7 @@ module.exports = function (webpackEnv) {
           {
             inject: true,
             template: "./src/index.html",
-            favicon: './src/assets/images/favicon.png',
+            // favicon: './src/assets/images/favicon.png',
           },
           // Only for production
           isEnvProduction ? {
@@ -187,7 +167,7 @@ module.exports = function (webpackEnv) {
         )
       ),
 
-      new EnvironmentPlugin(["API_URL", "FRONTEND_MAIN_URL", "FRONTEND_MAP_URL"]),
+      new EnvironmentPlugin(["FRONTEND_URL"]),
     ],
   }
 };

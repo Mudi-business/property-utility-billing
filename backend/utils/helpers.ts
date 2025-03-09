@@ -19,12 +19,50 @@ export const calculateTotalPages = (
   return totalCount < pageSize ? 1 : Math.ceil(totalCount / pageSize);
 };
 
+export const getDateWithoutTime = (date: Date) => {
+  return require("moment")(date).format("YYYY-MM-DD");
+};
 
-export const getDateWithoutTime=(date:Date)=>{
-  return require('moment')(date).format('YYYY-MM-DD');
-}
+export const getDateWithTime = (date: Date) => {
+  return require("moment")(date).format("YYYY-MM-DD HH:mm:ss");
+};
 
-export const getDateWithTime=(date:Date)=>{
-  return require('moment')(date).format('YYYY-MM-DD HH:mm:ss');
-}
+export const InvalidObjectKeysDetection = (
+  body: object,
+  swaggerDto: object
+): boolean => {
+  const checkingUnAuthorizedKeys = Object.keys(body).filter((key) => {
+    return Object.keys(swaggerDto).indexOf(key) === -1;
+  });
+  if (checkingUnAuthorizedKeys.length > 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
+
+export const EmptyFieldsDetection = (
+  body: object,
+): boolean => {
+  const emptyFields = Object.values(body).filter((value):any => {
+     if (typeof value === 'number') {
+        if (value > 0) {
+          return undefined
+        }else{
+          return true;
+        }
+     }else if (typeof value === 'string'){
+        if (value !== '') {
+          return undefined
+        }else{
+          return true
+        }
+     }
+  });
+  if ([...new Set(emptyFields)].length > 0) {
+    return true;
+  } else {
+    return false;
+  }
+};

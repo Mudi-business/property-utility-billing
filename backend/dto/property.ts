@@ -1,9 +1,20 @@
 import { PropertyTypeEnum } from "../enums/property";
+import { UtilityBillsResponseDto } from "./utilityBill";
 
 export interface PropertyRequestDto {
   property_name: string;
   property_address: string;
   property_type: PropertyTypeEnum;
+}
+
+export interface PropertyResponseWithBillsDto {
+  property_id: string;
+  property_name: string;
+  property_address: string;
+  property_type: PropertyTypeEnum;
+  UtilityBills:UtilityBillsResponseDto[]
+  createdAt: Date;
+  updateAt: Date;
 }
 
 export interface PropertyResponseDto {
@@ -14,6 +25,9 @@ export interface PropertyResponseDto {
   createdAt: Date;
   updateAt: Date;
 }
+
+
+
 
 export interface PropertyFindAndCountAll {
   count: number;

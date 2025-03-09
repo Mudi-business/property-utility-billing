@@ -32,6 +32,17 @@ router.get(
             type: 'number',
             value: "10"
     } */
+    /*  #swagger.parameters['search'] = {
+            in: 'query',
+            description: 'Search',
+            required: 'false',
+            type: 'string',
+        
+    } */
+  /*	#swagger.parameters['filter'] = {
+            required: false,
+            schema: { $ref: "#/definitions/RequestFilterSearch" }
+  } */
     /* #swagger.responses[200] = { 
             schema: { $ref: "#/definitions/ResponsePropertyPageable" },
             description: 'OK' 

@@ -9,10 +9,14 @@ export class PropertyService {
 
   getAllProperties = async (req: Request, res: Response) => {
     try {
-      const { page, size }: any = req.query;
-      const PageNo = parseInt(page);
+      const { page, size,search,filter }: any = req.query;
+      console.log('search:',search,'and filter :',filter);
+      
+      const PageNo = parseInt(page) * parseInt(size);
       const PageSize = parseInt(size);
-      const properties = await this.propertyRepo.findAll(PageNo, PageSize);
+      const propSearch = search === undefined?'0':search===''?'0':search;
+      const propFilter = filter === undefined?'0':filter===''?'0':filter;
+      const properties = await this.propertyRepo.findAll(PageNo, PageSize,propSearch,propFilter);
 
       return res.status(HttpStatusCode.Ok).send({
         properties: properties.rows,
@@ -36,7 +40,7 @@ export class PropertyService {
   getPropertyById = async (req: Request, res: Response) => {
     try {
       const id = req.params.id;
-      const properties = await this.propertyRepo.findById(id);
+      const properties = await this.propertyRepo.findById(id);      
       return res.status(HttpStatusCode.Ok).send(properties);
     } catch (error: any) {
       return res.status(HttpStatusCode.InternalServerError).send({

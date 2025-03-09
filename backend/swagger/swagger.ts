@@ -1,4 +1,4 @@
-import { requestPropertiesSwaggerDto, responsePropertiesPageableSwaggerDto, responsePropertySwaggerDto } from "./dto/propertySwaggerDto";
+import { requestPropertiesSwaggerDto, requestPropertyFilterSearch, responsePropertiesPageableSwaggerDto, responsePropertySwaggerDto } from "./dto/propertySwaggerDto";
 import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, responseUtilityBillSwaggerDto } from "./dto/utilityBIllSwaggerDto";
 
   
@@ -47,11 +47,15 @@ import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, r
       RequestProperty: requestPropertiesSwaggerDto,
       ResponseProperty: responsePropertySwaggerDto,
       ResponsePropertyPageable: responsePropertiesPageableSwaggerDto,
+      RequestFilterSearch:requestPropertyFilterSearch,
 
       //UtilitBilling
       RequestUtilityBill: requestUtilityBillSwaggerDto,
       ResponseUtilityBill: responseUtilityBillSwaggerDto,
       ResponseUtilityBillsPageable: responseUtilityBillsPageableSwaggerDto,
+
+
+
     },
   };
   swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {

@@ -7,6 +7,10 @@ export const requestPropertiesSwaggerDto = {
   property_type: { "@enum": displaySwaggerEnumList(PropertyTypeEnum) },
 };
 
+export const requestPropertyFilterSearch = [
+  { "@enum": displaySwaggerEnumList(PropertyTypeEnum) },
+];
+
 export const responsePropertySwaggerDto = {
     property_id: "uuid",
     property_name: "string",

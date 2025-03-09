@@ -1,4 +1,5 @@
 import { PropertyTypeEnum } from "../enums/property";
+import { BillDto } from "./bills";
 
 export interface PropertyPageableDto {
   pageNo: number;
@@ -9,17 +10,26 @@ export interface PropertyPageableDto {
 }
 
 export interface PropertyDto {
-  createdAt: Date;
-  created_by: string;
-  property_address: string;
   property_id: string;
   property_name: string;
+  property_address: string;
   property_type: PropertyTypeEnum;
-  updatedAt: Date;
+  createdAt: Date;
+  updateAt: Date;
+}
+
+export interface PropertyResponseWithBillsDto {
+  property_id: string;
+  property_name: string;
+  property_address: string;
+  property_type: PropertyTypeEnum;
+  UtilityBills:BillDto[]
+  createdAt: Date;
+  updateAt: Date;
 }
 
 export interface PropertyRequestDto {
   property_name: string;
   property_address: string;
-  property_type: PropertyTypeEnum | undefined;
+  property_type: PropertyTypeEnum | string;
 }

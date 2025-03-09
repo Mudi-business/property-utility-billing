@@ -12,7 +12,7 @@ export const GET_ALL_PROPERTIES = function <T>({
   search:string;
   filter:string
 }) {
-  const url = `${process.env.API_URL}/properties/pageable?page=${page}&size=${page_size}`;
+  const url = `${process.env.API_URL}/properties/pageable?page=${page}&size=${page_size}&search=${search}&filter=${filter}`;
   return axios.get<T>(url);
 };
 

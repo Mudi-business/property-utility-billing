@@ -11,7 +11,7 @@ export interface BillPageableDto {
 export interface BillDto {
   utility_billing_id: string;
   property_id: string;
-  utility_billing_amount: number;
+  utility_bill_amount: number;
   utility_bill_type: UtilityBillTypeEnum;
   utility_bill_date: string;
   createdAt: Date;
@@ -20,7 +20,7 @@ export interface BillDto {
 
 export interface BillRequestDto {
   property_id: string;
-  utility_bill_amount: number;
-  utility_bill_type: UtilityBillTypeEnum | undefined;
+  utility_bill_amount: number|string;
+  utility_bill_type: UtilityBillTypeEnum | string;
   utility_bill_date: string;
 }

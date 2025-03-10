@@ -76,7 +76,6 @@ Open your browser and navigate to http://localhost:7070/swagger-ui (or the port 
 - Navigate to the frontend directory
 The *frontend* project requires the following environment variables to be set. Copy the .env.example file to .env.dev and update the values:
 
-# Server Configuration
 FRONTEND_URL=http://localhost:8080
 API_URL=http://localhost:7070
 PORT=8080
@@ -141,7 +140,7 @@ Utility Bill Entry Form
 Requirement specify that the form should have a dropdown of properties for user to select while creating Utility Bill but It is assumed that to add new Utility Bill, the adding button will be inside a Utility bills that have been fetched by a specific Property so our assumption is that there was no much need to Add a Utility bill by choosing a Property while we already on a specific Property.
 
 Seed Data,unit testing and other uncomplete Tasks
-The requirment insist of adding seed data in the database , but lack of a specific date time of our deadline we were forced to to perform the core task first and so the Application assumes that data will be Inputed by user direct.
+The requirment insist of adding seed data in the database , but a worry of unspecific date and time of our deadline we were forced to to perform the core task first and so the application assumes that data will be Inputed by user direct.
 
 The application assumes that all user inputs are validated on the client and server side before being sent to the server.
 

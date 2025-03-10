@@ -22,6 +22,12 @@ export const GET_UTILITY_BILL_BY_ID = function (id: string) {
   return axiosInstance.get(url);
 };
 
+export const GET_UTILITY_BILL_BY_PROPERTY_ID = function (id: string) {
+  const url = `/utility/bills/${id}`;
+  return axiosInstance.get(url);
+};
+
+
 export const CREATE_UTILITY_BILLL = function (props: { data: BillRequestDto }) {
   const url = `/utility/bill`;
   return axiosInstance.post(url, props.data);

@@ -55,25 +55,6 @@ export const UtilityBillComponent: React.FC = () => {
             >
 
               {/* START OF UTILITY BILL FORM FIELDS */}
-              <div className="w-full max-w-sm min-w-[200px]">
-                <label className="block mb-2 text-sm text-slate-600">
-                  Bill Amount
-                </label>
-                <input
-                  value={formData.utility_bill_amount}
-                  type="number"
-                  onChange={(event: any) => {
-                    setFormData((prev) => ({
-                      ...prev,
-                      utility_bill_amount: event.target.value,
-                    }));
-                  }}
-                  required
-                  placeholder="Enter Bill Amount"
-                  className="w-full bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                />
-              </div>
-
               <div className="w-full max-w-sm min-w-[200px] mt-5">
                 <label className="block mb-2 text-sm text-slate-600">
                   Choose Bill Type
@@ -115,6 +96,25 @@ export const UtilityBillComponent: React.FC = () => {
                     />
                   </svg>
                 </div>
+              </div>
+
+              <div className="w-full max-w-sm min-w-[200px]">
+                <label className="block mb-2 text-sm text-slate-600">
+                  Bill Amount
+                </label>
+                <input
+                  value={formData.utility_bill_amount}
+                  type="number"
+                  onChange={(event: any) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      utility_bill_amount: event.target.value,
+                    }));
+                  }}
+                  required
+                  placeholder="Enter Bill Amount"
+                  className="w-full bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                />
               </div>
 
               <div className="w-full max-w-sm min-w-[200px] mt-5">

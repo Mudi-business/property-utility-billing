@@ -1,6 +1,8 @@
 import { PropertyTypeEnum } from "../enums/property";
 import { BillDto } from "./bills";
 
+
+//PROPERTIES DTOs
 export interface PropertyPageableDto {
   pageNo: number;
   pageSize: number;

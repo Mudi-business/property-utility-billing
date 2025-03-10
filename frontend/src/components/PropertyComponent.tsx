@@ -23,7 +23,7 @@ export const PropertyComponent: React.FC = () => {
       topStack={
         <div className="flex flex-row w-full gap-3">
           <button
-          role="button"
+            role="button"
             className="rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             onClick={() => navigate(-1)}
           >
@@ -34,12 +34,14 @@ export const PropertyComponent: React.FC = () => {
       middleStack={
         <div className="border p-5 bg-slate-50">
           <h2 className="font-sans font-bold text-2xl">Add Property</h2>
+
+          {/* START PROPERTY FORM */}
           <form
             className="mt-8"
             onSubmit={(e) =>
               onSubmit(e)(
                 formData,
-                //   FormNotification,
+                //FormNotification,
                 setFormLoader,
                 setFormData,
                 navigate,
@@ -47,6 +49,8 @@ export const PropertyComponent: React.FC = () => {
               )
             }
           >
+
+            {/* START OF FORM FIELD */}
             <div className="w-full max-w-sm min-w-[200px]">
               <label className="block mb-2 text-sm text-slate-600">
                 Property Name
@@ -65,6 +69,8 @@ export const PropertyComponent: React.FC = () => {
                 placeholder="Enter property name..."
               />
             </div>
+
+
             <div className="w-full max-w-sm min-w-[200px] mt-5">
               <label className="block mb-2 text-sm text-slate-600">
                 Property Address
@@ -84,6 +90,7 @@ export const PropertyComponent: React.FC = () => {
               />
             </div>
 
+
             <div className="w-full max-w-sm min-w-[200px] mt-5">
               <label className="block mb-2 text-sm text-slate-600">
                 Choose Property Type
@@ -102,8 +109,6 @@ export const PropertyComponent: React.FC = () => {
                 >
                   {["", ...displayEnumList(PropertyTypeEnum)].map(
                     (type, index) => {
- 
-
                       return (
                         <option key={index} value={type}>
                           {type}
@@ -128,7 +133,9 @@ export const PropertyComponent: React.FC = () => {
                 </svg>
               </div>
             </div>
-
+            {/* END OF FORM FIELDS */}
+            
+            {/* START OF ACTION FORM BUTTON */}
             <div className="flex flex-row justify-start gap-3 mt-5">
               <button
                 className="rounded-md bg-green-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-green-700 hover:bg-green-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -137,87 +144,27 @@ export const PropertyComponent: React.FC = () => {
                 Submit
               </button>
               <button
-                className="rounded-md bg-gray-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-gray-700 focus:shadow-none active:bg-gray-700 hover:bg-gray-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                className="rounded-md bg-gray-800 opacity-70 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-gray-700 focus:shadow-none active:bg-gray-700 hover:bg-gray-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="button"
                 onClick={handliOnClickCancel}
               >
-                Cancel
+                Reset
               </button>
             </div>
+            {/* END OF ACTION FORM BUTTON */}
+
           </form>
+          {/* END PROPERTY FORM */}
         </div>
       }
       bottomStack={<></>}
     />
-    // <React.Fragment>
-    //     <button onClick={()=>navigate(-1)}>Go Back</button>
-    //   <form
-    //     onSubmit={(e) =>
-    //       onSubmit(e)(
-    //         formData,
-    //         //   FormNotification,
-    //         setFormLoader,
-    //         setFormData,
-    //         navigate,
-    //         initialForm
-    //       )
-    //     }
-    //   >
-    //     <input
-    //       value={formData.property_name}
-    //       type="text"
-    //       onChange={(event: any) => {
-    //         setFormData((prev) => ({
-    //           ...prev,
-    //           property_name: event.target.value,
-    //         }));
-    //       }}
-    //       required
-    //       placeholder="property name"
-    //     />
-    //     <input
-    //       value={formData.property_address}
-    //       type="text"
-    //       required
-    //       onChange={(event: any) => {
-    //         setFormData((prev) => ({
-    //           ...prev,
-    //           property_address: event.target.value,
-    //         }));
-    //       }}
-    //       placeholder="property address"
-    //     />
-    //     <select
-    //       onChange={(event: any) => {
-    //         setFormData((prev) => ({
-    //           ...prev,
-    //           property_type: event.target.value,
-    //         }));
-    //       }}
-    //       value={formData.property_type}
-    //     >
-    //       {displayEnumList(PropertyTypeEnum).map((type, index) => {
-    //         return (
-    //           <option key={index} value={type}>
-    //             {type}
-    //           </option>
-    //         );
-    //       })}
-    //     </select>
-
-    //     <button type="submit">Save</button>
-    //     <button type="button" onClick={handliOnClickCancel}>
-    //       Cancel
-    //     </button>
-    //   </form>
-    // </React.Fragment>
   );
 };
 
 function onSubmit(e: React.FormEvent<HTMLFormElement>) {
   return async function (
     data: PropertyRequestDto,
-    //   notification: (type: string, message: string) => any,
     setLoader: (status: boolean) => void,
     setFormData: (data: PropertyRequestDto) => void,
     navigate: (value: any) => void,
@@ -226,8 +173,6 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       setLoader(true);
-      console.log("body :", data);
-
       const response = await CREATE_PROPERTY({ data });
       const savedProperty: PropertyDto = response.data;
       if (savedProperty?.property_id !== undefined) {

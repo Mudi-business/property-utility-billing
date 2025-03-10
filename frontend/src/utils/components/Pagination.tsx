@@ -1,14 +1,6 @@
 import React from "react";
 
-interface formFilters {
-  search: string;
-  filter: string;
-  pageNo: number;
-  pageSize: number;
-  totalPages: number;
-  totalItems: number;
-}
-
+//RESUSBLE PAGINATION COMPONENT FOR OUR ENTIRE APPLICATION DEVELOPMENT
 export const Pagination: React.FC<{
   pageNo: number;
   totalPage: number;

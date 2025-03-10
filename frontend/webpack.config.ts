@@ -30,7 +30,7 @@ module.exports = function (webpackEnv: any) {
     },
     devServer: {
       host: "0.0.0.0",
-      port: 8080,
+      port: process.env.PORT,
       historyApiFallback: true,
       allowedHosts: [`${process.env.FRONTEND_URL}`],
     },
@@ -150,7 +150,7 @@ module.exports = function (webpackEnv: any) {
         )
       ),
 
-      new EnvironmentPlugin(["FRONTEND_URL","API_URL"]),
+      new EnvironmentPlugin(["FRONTEND_URL","API_URL","PORT"]),
     ],
   };
 };

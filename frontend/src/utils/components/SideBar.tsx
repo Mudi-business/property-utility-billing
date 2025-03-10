@@ -1,11 +1,35 @@
+import { HttpStatusCode } from "axios";
+import { jwtDecode } from "jwt-decode";
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { LogoutResponseDto, tokenSuccessDto } from "~/dto/login";
+import { LOGOUT_USER } from "../../services/login";
 
 export const SideBar: React.FC = () => {
   const navigate = useNavigate();
+  const tokenDataa = useSelector((state: any) => state.login);
+  const token: { access_token: string; refresh_token: string } = JSON.parse(
+    typeof tokenDataa?.token === 'object'?JSON.stringify(tokenDataa?.token):tokenDataa?.token
+  );
+
+
+  const handleOnLogout = async()=>{
+    try {
+      const decodeToken: tokenSuccessDto = jwtDecode(token?.access_token);
+      const resp:any = await LOGOUT_USER({user_id:decodeToken?.data?.id})
+      const logoutUser:LogoutResponseDto = resp.data;
+      if (logoutUser.status === HttpStatusCode.Ok) {
+        localStorage.clear();
+        window.location.assign("/");
+      } 
+    } catch (error) {
+      // console.log('logout error :',error);
+    }
+  }
   return (
     <div className=" relative flex h-[calc(100vh)] w-full max-w-[20rem] flex-col bg-slate-900 bg-clip-border p-4 text-gray-700 opacity-80 shadow-lg shadow-blue-gray-900/5">
-     <div className=" hidden md:block p-4 mb-2 bg-white opacity-90 rounded-sm">
+      <div className=" hidden md:block p-4 mb-2 bg-white opacity-90 rounded-sm">
         <h5 className="block text-center font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-slate-900">
           PMS
         </h5>
@@ -60,6 +84,7 @@ export const SideBar: React.FC = () => {
         </div>
         <div
           role="button"
+          onClick={handleOnLogout}
           className="flex text-red-700 items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-slate-950 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
         >
           <div className="grid mr-4 place-items-center">
@@ -98,8 +123,8 @@ export const SideBar: React.FC = () => {
           />
         </svg>
         <svg
-           role="button"
-           onClick={() => {
+          role="button"
+          onClick={() => {
             navigate("/home/properties");
           }}
           xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +139,8 @@ export const SideBar: React.FC = () => {
           />
         </svg>
         <svg
-           role="button"
+          role="button"
+          onClick={handleOnLogout}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"

@@ -290,7 +290,7 @@ export const Property: React.FC = () => {
                   <option value="50">50</option>
                   <option value="100">100</option>
                   <option value="150">150</option>
-                  <option value="All">All</option>
+        
                 </select>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

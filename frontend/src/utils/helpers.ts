@@ -1,3 +1,5 @@
+//RESUSBLE HELPERS TO HELP US BOOST OUR APPLICATION  DEVELOPMENT MORE FASTER
+
 export function displayEnumList(enumList: object): string[] {
   return Object.keys(enumList)
     .filter((status: any) => {

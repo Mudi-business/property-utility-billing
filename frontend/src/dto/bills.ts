@@ -1,5 +1,6 @@
 import { UtilityBillTypeEnum } from "~/enums/bill";
 
+//UTILITY BILLS DTOs
 export interface BillPageableDto {
   pageNo: number;
   pageSize: number;

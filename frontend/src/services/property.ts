@@ -1,6 +1,7 @@
-import axios from "axios";
 import { PropertyRequestDto } from "~/dto/property";
+import { axiosInstance } from "../utils/functions/axiosInstance";
 
+//PROPERTY SERVICES
 export const GET_ALL_PROPERTIES = function <T>({
   page,
   page_size,
@@ -12,16 +13,16 @@ export const GET_ALL_PROPERTIES = function <T>({
   search:string;
   filter:string
 }) {
-  const url = `${process.env.API_URL}/properties/pageable?page=${page}&size=${page_size}&search=${search}&filter=${filter}`;
-  return axios.get<T>(url);
+  const url = `/properties/pageable?page=${page}&size=${page_size}&search=${search}&filter=${filter}`;
+  return axiosInstance.get<T>(url);
 };
 
 export const GET_PROPERTY_BY_ID = function (id: string) {
-  const url = `${process.env.API_URL}/property/${id}`;
-  return axios.get(url);
+  const url = `/property/${id}`;
+  return axiosInstance.get(url);
 };
 
 export const CREATE_PROPERTY = function (props: { data: PropertyRequestDto }) {
-  const url = `${process.env.API_URL}/property`;
-  return axios.post(url, props.data);
+  const url = `/property`;
+  return axiosInstance.post(url, props.data);
 };

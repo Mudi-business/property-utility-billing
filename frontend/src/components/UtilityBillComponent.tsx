@@ -38,12 +38,14 @@ export const UtilityBillComponent: React.FC = () => {
         middleStack={
           <div className="border p-5 bg-slate-50">
             <h2 className="font-sans font-bold text-2xl">Add Utility Bill</h2>
+
+            {/* START OF UTILITY BILL FORM */}
             <form
               className="mt-8"
               onSubmit={(e) =>
                 onSubmit(e)(
                   formData,
-                  //   FormNotification,
+                  //FormNotification,
                   setFormLoader,
                   setFormData,
                   navigate,
@@ -51,6 +53,8 @@ export const UtilityBillComponent: React.FC = () => {
                 )
               }
             >
+
+              {/* START OF UTILITY BILL FORM FIELDS */}
               <div className="w-full max-w-sm min-w-[200px]">
                 <label className="block mb-2 text-sm text-slate-600">
                   Bill Amount
@@ -112,6 +116,7 @@ export const UtilityBillComponent: React.FC = () => {
                   </svg>
                 </div>
               </div>
+
               <div className="w-full max-w-sm min-w-[200px] mt-5">
                 <label className="block mb-2 text-sm text-slate-600">
                   Date
@@ -130,7 +135,9 @@ export const UtilityBillComponent: React.FC = () => {
                   className="w-full bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                 />
               </div>
+              {/* END OF UTILITY BILL FORM FIELDS */}
 
+              {/* START OF ACTION BUTTONS */}
               <div className="flex flex-row justify-start gap-3 mt-5">
                 <button
                   className="rounded-md bg-green-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-green-700 hover:bg-green-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -143,10 +150,12 @@ export const UtilityBillComponent: React.FC = () => {
                   type="button"
                   onClick={handliOnClickCancel}
                 >
-                  Cancel
+                  Reset
                 </button>
               </div>
+              {/* END OF ACTION BUTTONS */}
             </form>
+            {/* END OF UTILITY BILL FORM */}
           </div>
         }
         bottomStack={<></>}
@@ -158,7 +167,6 @@ export const UtilityBillComponent: React.FC = () => {
 function onSubmit(e: React.FormEvent<HTMLFormElement>) {
   return async function (
     data: BillRequestDto,
-    //   notification: (type: string, message: string) => any,
     setLoader: (status: boolean) => void,
     setFormData: (data: BillRequestDto) => void,
     navigate: (value: any) => void,
@@ -167,8 +175,6 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       setLoader(true);
-      console.log("body :", data);
-
       const response = await CREATE_UTILITY_BILLL({ data });
       const savedUtilityBill: BillDto = response.data;
       if (savedUtilityBill?.property_id !== undefined) {

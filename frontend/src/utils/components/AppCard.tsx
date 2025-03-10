@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 
+//RESUSBLE APP CARD FOR OUR ENTIRE APPLICATION DEVELOPMENT
 export const AppCard: React.FC<{
   topStack: ReactNode;
   middleStack: ReactNode;

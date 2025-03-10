@@ -110,6 +110,21 @@ export class LoginService {
     }
   };
 
+  checkLoginExist = async (user:UserResponseDto) => {
+    try {
+      await this.issueToken(user);
+      const login: LoginResponseDto = await this.loginRepo.findById(user?.user_id);
+
+      if ((login?.access_token !== null || login?.refresh_token !== null) && login !=null ) {
+          return {access_token:login?.access_token,refresh_token:login?.refresh_token}
+      } else {
+       return false
+      }
+    } catch (error: any) {
+      return false
+    }
+  };
+
   login = async (res: Response, user: UserResponseDto) => {
     try {
       await this.issueToken(user);
@@ -121,6 +136,30 @@ export class LoginService {
         access_token: login.access_token,
         refresh_token: login.refresh_token,
       });
+    } catch (error: any) {
+      return res.status(HttpStatusCode.InternalServerError).send({
+        status: HttpStatusCode.InternalServerError,
+        message: error?.name,
+      });
+    }
+  };
+
+
+  logout = async (res:Response,user:UserResponseDto) => {
+    try {
+      await this.issueToken(user);
+      const loginUpdatedList: number[] = await this.loginRepo.update({access_token:null,refresh_token:null},user?.user_id);
+      if (loginUpdatedList.length>0) {
+        return res.status(HttpStatusCode.Ok).send({
+          status: HttpStatusCode.Ok,
+          message: "User logged out successfully",
+        });
+      } else {
+        return res.status(HttpStatusCode.NotFound).send({
+          status: HttpStatusCode.NotFound,
+          message: "Failed to logout user",
+        });
+      }
     } catch (error: any) {
       return res.status(HttpStatusCode.InternalServerError).send({
         status: HttpStatusCode.InternalServerError,

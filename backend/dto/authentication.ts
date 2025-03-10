@@ -10,8 +10,8 @@ export interface RefreshTokenDto {
 }
 
 export interface LoginResponseDto {
-  access_token: string;
-  refresh_token: string;
+  access_token: string|null;
+  refresh_token: string|null;
 }
 
 export interface UserLoginDto {

@@ -11,7 +11,17 @@ export const requestRefreshTokenSwaggerDto = {
   };
   
 
+export const requestLogoutSwaggerDto = {
+  user_id: "uuid",
+};
+
+export const responseLogoutSwaggerDto = {
+  status:200,
+  message:"string"
+};
+
 export const responseLoginSwaggerDto = {
   access_token:"string",
   refresh_token:"string"
 };
+

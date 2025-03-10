@@ -11,7 +11,7 @@ const Protect = require("../auth/protect");
 // Below is our swagger comments that demonstrate how to map our routes with swagger
 
 
-// Below are Our User Routes with Typedi User Service Injection
+// Below are our User Routes with Typedi User Service Injection
 router.get("/user/:id", auth, Protect(), (req: Request, res: Response) => {
   // #swagger.tags = ['User']
   // #swagger.summary = 'Get User By Id..'
@@ -27,7 +27,7 @@ router.get("/user/:id", auth, Protect(), (req: Request, res: Response) => {
   userInstance.getUserById(req, res);
 });
 
-router.post("/user", auth, Protect(), (req: Request, res: Response) => {
+router.post("/user", (req: Request, res: Response) => {
   // #swagger.tags = ['User']
   // #swagger.summary = 'Create User..'
   // #swagger.description = 'Create User.'

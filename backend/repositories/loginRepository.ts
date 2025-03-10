@@ -17,4 +17,13 @@ export class LoginRepository {
     });
     return updated;
   };
+  findById = async (id: string) => {
+    const login: LoginResponseDto = await db.Login.findOne(
+      {
+        where: { user_id: id },
+      }
+    );
+    return login;
+  };
+
 }

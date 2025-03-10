@@ -4,6 +4,7 @@ import { Container } from "typedi";
 import { LoginService } from "../services/loginService";
 import { UserResponseDto } from "../dto/user";
 import { AxiosError, HttpStatusCode } from "axios";
+import { LoginResponseDto } from "../dto/authentication";
 const router = express.Router();
 const loginInstance = Container.get(LoginService);
 const auth = require("../auth/auth");
@@ -12,8 +13,7 @@ const Protect = require("../auth/protect");
 // Since We use swagger-autogen for out Api Documentation that help us performing our Api Test easily
 // Below is our swagger comments that demonstrate how to map our routes with swagger
 
-
-// Below are Our Login Routes with Typedi Login Service Injection
+// Below are our Login Routes with Typedi Login Service Injection
 router.post("/login", (req: Request, res: Response) => {
   // #swagger.tags = ['Login']
   // #swagger.summary = 'Login User..'
@@ -29,13 +29,21 @@ router.post("/login", (req: Request, res: Response) => {
                schema: { $ref: "#/definitions/ResponseLogin" },
                description: 'OK' 
         } */
-  // console.log("headers :", req.headers);
+
   loginInstance
     .validateUser(req, res)
     .then((response: any) => {
       const user: UserResponseDto = response;
       if (user !== undefined) {
-        loginInstance.login(res, user);
+        loginInstance
+          .checkLoginExist(user)
+          .then((exist: LoginResponseDto | boolean) => {
+            if (exist !== false) {             
+              res.status(HttpStatusCode.Ok).send(exist);
+            } else {
+              loginInstance.login(res, user);
+            }
+          });
       } else {
         res.status(HttpStatusCode.NotFound).send({
           status: HttpStatusCode.NotFound,
@@ -57,6 +65,30 @@ router.post("/login", (req: Request, res: Response) => {
       }
     });
 });
+
+router.post(
+  "/logout",
+  auth,
+  Protect(),
+  (req: Request, res: Response) => {
+    // #swagger.tags = ['Login']
+    // #swagger.summary = 'Logout User ..'
+    // #swagger.description = 'Logout User.'
+    /* #swagger.security = [{
+              "bearerAuth": []
+      }] */
+    /*	#swagger.requestBody = {
+              required: true,
+              schema: { $ref: "#/definitions/RequestLogout" }
+    } */
+    /* #swagger.responses[200] = { 
+                 schema: { $ref: "#/definitions/ResponseLogout" },
+                 description: 'OK' 
+          } */
+    // console.log("headers :", req.headers);
+    loginInstance.refresh_token(req, res);
+  }
+);
 
 router.post(
   "/refresh/token",

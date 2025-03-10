@@ -6,8 +6,7 @@ import {
 } from "../dto/utilityBill";
 const db = require("../models");
 
-
-// We use Typedi for Performing dependency Injection 
+// We use Typedi for Performing dependency Injection
 // Below is Our Utility Bill Repository with Sequelize UtilityBill Model
 @Service()
 export class UtilityBillRepository {
@@ -25,6 +24,15 @@ export class UtilityBillRepository {
     return bill;
   };
 
+  findByPropertyId = async (property_id: string) => {
+    const bills: UtilityBillRequestDto[] = await db.UtilityBill.findAll({
+      where: {
+        property_id,
+      },
+    });
+    return bills;
+  };
+  
   save = async (body: UtilityBillRequestDto) => {
     const bill: UtilityBillsResponseDto = await db.UtilityBill.create(body);
     return bill;

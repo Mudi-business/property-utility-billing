@@ -11,7 +11,7 @@ const Protect = require("../auth/protect");
 // Below is our swagger comments that demonstrate how to map our routes with swagger
 
 
-// Below are Our Property Routes with Typedi Property Service Injection
+// Below are our Property Routes with Typedi Property Service Injection
 router.get(
   "/properties/pageable",
   auth,

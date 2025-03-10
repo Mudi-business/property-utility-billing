@@ -25,6 +25,20 @@ export const responseUtilityBillSwaggerDto = {
   updateAt: `${getDateWithTime(new Date())}`,
 };
 
+export const responseUtilityBillsSwaggerDto = [
+  {
+    utility_billing_id: "uuid",
+    property_id: "uuid",
+    utility_bill_amount: 0,
+    utility_bill_type: {
+      "@enum": displaySwaggerEnumList(UtilityBillTypeEnum),
+    },
+    utility_bill_date: `${getDateWithoutTime(new Date())}`,
+    createdAt: `${getDateWithTime(new Date())}`,
+    updateAt: `${getDateWithTime(new Date())}`,
+  },
+]
+
 export const responseUtilityBillsPageableSwaggerDto = {
   bills: [
     {

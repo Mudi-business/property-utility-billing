@@ -1,7 +1,7 @@
-import { requestLoginSwaggerDto, requestRefreshTokenSwaggerDto, responseLoginSwaggerDto } from "./dto/LoginSwaggerDto";
+import { requestLoginSwaggerDto, requestLogoutSwaggerDto, requestRefreshTokenSwaggerDto, responseLoginSwaggerDto, responseLogoutSwaggerDto } from "./dto/LoginSwaggerDto";
 import { requestPropertiesSwaggerDto, requestPropertyFilterSearch, responsePropertiesPageableSwaggerDto, responsePropertySwaggerDto } from "./dto/propertySwaggerDto";
 import { requestUserSwaggerDto, responseUserSwaggerDto } from "./dto/userSwaggerDto";
-import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, responseUtilityBillSwaggerDto } from "./dto/utilityBIllSwaggerDto";
+import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, responseUtilityBillsSwaggerDto, responseUtilityBillSwaggerDto } from "./dto/utilityBIllSwaggerDto";
 
   
 // Since We use swagger-autogen for out Api Documentation that help us performing our Api Test easily
@@ -59,6 +59,7 @@ import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, r
       //UtilitBilling
       RequestUtilityBill: requestUtilityBillSwaggerDto,
       ResponseUtilityBill: responseUtilityBillSwaggerDto,
+      ResponseUtilityBills:responseUtilityBillsSwaggerDto,
       ResponseUtilityBillsPageable: responseUtilityBillsPageableSwaggerDto,
 
       //User
@@ -68,8 +69,11 @@ import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, r
       //Authentication
       RequestLogin:requestLoginSwaggerDto,
       RequestRefreshToken:requestRefreshTokenSwaggerDto,
-      ResponseLogin:responseLoginSwaggerDto
+      ResponseLogin:responseLoginSwaggerDto,
 
+      //Logout
+      RequestLogout:requestLogoutSwaggerDto,
+      ResponseLogout:responseLogoutSwaggerDto
 
     },
   };

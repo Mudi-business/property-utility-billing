@@ -11,7 +11,7 @@ const Protect = require("../auth/protect");
 // Below is our swagger comments that demonstrate how to map our routes with swagger
 
 
-// Below are Our Utility Bills Routes with Typedi Utility Bill Service Injection
+// Below are our Utility Bills Routes with Typedi Utility Bill Service Injection
 router.get(
   "/utility/bills/pageable",
   auth,
@@ -42,6 +42,26 @@ router.get(
             description: 'OK' 
     } */
     utilityBillInstance.getAllUtilityBills(req, res);
+  }
+);
+
+router.get(
+  "/utility/bills",
+  auth,
+  Protect(),
+  (req: Request, res: Response) => {
+    // #swagger.tags = ['UtilityBill']
+    // #swagger.summary = 'Get Utility Bills By Property Id..'
+    // #swagger.description = 'Get Utility Bills By Property Id.'
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
+    //  #swagger.parameters['id'] = { description: 'Property Id' }
+    /* #swagger.responses[200] = { 
+               schema: { $ref: "#/definitions/ResponseUtilityBills" },
+               description: 'OK' 
+        } */
+    utilityBillInstance.getUtilityBillsByPropertyId(req, res);
   }
 );
 

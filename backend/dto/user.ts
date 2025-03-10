@@ -1,4 +1,5 @@
 
+//dto (Data Transfer Objects) for User
 export interface UserRequestDto {
   email: string;
   first_name: string;

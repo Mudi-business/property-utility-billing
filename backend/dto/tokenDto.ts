@@ -1,3 +1,4 @@
+//dto (Data Transfer Objects) for Decoded Token
 export interface tokenSuccessDto {
     data: {id:string};
     iat: number;

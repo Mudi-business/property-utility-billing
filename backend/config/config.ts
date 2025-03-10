@@ -1,3 +1,4 @@
+//ORM Sequelize Database configuration for our Mysql Database
 module.exports = {
     development: {
       username: process.env.DB_USERNAME,

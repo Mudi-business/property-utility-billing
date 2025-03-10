@@ -1,6 +1,8 @@
 
 import {  getDateWithTime } from "../../utils/helpers";
 
+// Since We use swagger-autogen for out Api Documentation that help us performing our Api Test easily
+// Below we Initialize our User swagger DTO
 export const requestUserSwaggerDto = {
   email: "string",
   first_name: "string",

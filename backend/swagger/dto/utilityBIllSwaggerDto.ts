@@ -5,6 +5,9 @@ import {
   getDateWithTime,
 } from "../../utils/helpers";
 
+
+// Since We use swagger-autogen for out Api Documentation that help us performing our Api Test easily
+// Below we Initialize our Utility Bill swagger DTO
 export const requestUtilityBillSwaggerDto = {
   property_id: "uuid",
   utility_bill_amount: 0,

@@ -1,6 +1,8 @@
 import { PropertyTypeEnum } from "../enums/property";
 import { UtilityBillsResponseDto } from "./utilityBill";
 
+
+//dto (Data Transfer Objects) for Properties
 export interface PropertyRequestDto {
   property_name: string;
   property_address: string;

@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import { tokenSuccessDto } from "../dto/tokenDto";
 import { TokenGrantsEnum } from "../enums/token";
 import { HttpStatusCode } from "axios";
-
 const jwt = require("jsonwebtoken");
 
+//protect middleware is a middleware that we intercept 
+// in order to check if the authorizatin header is from our issuer
 module.exports = () => {
   return async (req: Request, res: Response, next: Function) => {
     try {

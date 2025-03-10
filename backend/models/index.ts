@@ -1,5 +1,9 @@
 "use strict";
 export {};
+
+//Since we use Sequelize as our ORM(Object Relational Mapper)
+//This is a root index file for our sequelize configurations
+//Generated throught sequelize cli itself
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
@@ -48,6 +52,7 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+//Our Models with their respective Relationships
 db.Property = require("./property")(sequelize, DataTypes);
 db.UtilityBill = require("./utilityBill")(sequelize, DataTypes);
 db.User = require("./user")(sequelize,DataTypes)

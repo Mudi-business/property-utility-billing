@@ -9,7 +9,8 @@
     "db:migrate": "sequelize-cli db:migrate",
     "build": "npx tsc",
     "start": "nodemon index.js",
-    "dev": "concurrently \"npx tsc\" \"node dist/swagger/swagger.js\""
+    "compile": "npx tsc",
+    "dev": "env-cmd -f .env.example concurrently \"npx tsc\" \"node dist/swagger/swagger.js\""
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "env-cmd": "^10.1.0",
     "express": "^4.21.2",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",

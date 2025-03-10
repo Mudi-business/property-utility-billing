@@ -8,10 +8,11 @@ import { HttpStatusCode } from "axios";
 import { UserRepository } from "../repositories/userRepository";
 import { requestUserSwaggerDto } from "../swagger/dto/userSwaggerDto";
 
+// We use Typedi for Performing dependency Injection
+// Below is Our User Service with Typedi User Repository Injection
 @Service()
 export class UserService {
   constructor(private userRepo: UserRepository) {}
-
 
   getUserById = async (req: Request, res: Response) => {
     try {

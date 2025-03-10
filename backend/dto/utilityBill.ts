@@ -1,5 +1,6 @@
 import { UtilityBillTypeEnum } from "../enums/utilityBill";
 
+//dto (Data Transfer Objects) for Utility Bills
 export interface UtilityBillRequestDto {
   property_id: string;
   utility_bill_amount: number;

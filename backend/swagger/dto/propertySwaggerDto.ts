@@ -1,6 +1,9 @@
 import { PropertyTypeEnum } from "../../enums/property";
 import { displaySwaggerEnumList, getDateWithTime } from "../../utils/helpers";
 
+
+// Since We use swagger-autogen for out Api Documentation that help us performing our Api Test easily
+// Below we Initialize our Property swagger DTO
 export const requestPropertiesSwaggerDto = {
   property_name: "string",
   property_address: "string",

@@ -4,6 +4,9 @@ import { requestUserSwaggerDto, responseUserSwaggerDto } from "./dto/userSwagger
 import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, responseUtilityBillSwaggerDto } from "./dto/utilityBIllSwaggerDto";
 
   
+// Since We use swagger-autogen for out Api Documentation that help us performing our Api Test easily
+// Below is our root swagger index file where define almost everything for our swagger
+// Note: You can locate this swagger documentation through http://localhost:port/swagger-ui
   const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
   const outputFile = "./swagger_output.json";
   const endpointsFiles = [
@@ -14,8 +17,8 @@ import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, r
   ];
   const doc = {
     info: {
-      title: "ZRA CENTRALIZED AUTH SERVICE", // short title.
-      description: "API FOR MANAGING CENTRALIZED AUTH SERVICE", //  desc.
+      title: "PROPERTY MANAGMENT SYSTEM (PMS)", // short title.
+      description: "API FOR MANAGING PMS SERVICE", //  desc.
       version: "1.0.0", // version number
       contact: {
         name: "Mohamed Bakari Mohamed", // your name
@@ -25,7 +28,7 @@ import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, r
     },
     servers: [
       {
-        url: `http://localhost:7070`,
+        url: `http://localhost:${process.env.PORT}`,
         description: "Development server",
       },
     ],

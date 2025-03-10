@@ -4,6 +4,7 @@ import { Model, UUIDV4 } from "sequelize";
 import { displaySwaggerEnumList } from "../utils/helpers";
 import { UtilityBillTypeEnum } from "../enums/utilityBill";
 
+//Initializing our UtilityBill Model with Sequelize
 module.exports = (sequelize: any, DataTypes: any) => {
   class UtilityBills extends Model {
     static associate(_: any) {}

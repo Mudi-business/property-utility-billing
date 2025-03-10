@@ -1,3 +1,6 @@
+
+// We use helpers to simplify the process of development we usually don't want to repeat thing every time in our code base
+
 export function displaySwaggerEnumList(enumList: object): string[] {
   return Object.keys(enumList)
     .filter((status: any) => {
@@ -6,16 +9,10 @@ export function displaySwaggerEnumList(enumList: object): string[] {
     .map((val: any) => val);
 }
 
-export const calculateTotalPages = (
-  pageSize: number,
-  totalCount: number,
-  dataLength: any
-) => {
-  // we suppose that if we have 0 items we want 1 empty page
+export const calculateTotalPages = (pageSize: number,totalCount: number,dataLength: any) => {
   if (dataLength.length === 0) {
     return 0;
-  } else {
-  }
+  } 
   return totalCount < pageSize ? 1 : Math.ceil(totalCount / pageSize);
 };
 
@@ -27,10 +24,7 @@ export const getDateWithTime = (date: Date) => {
   return require("moment")(date).format("YYYY-MM-DD HH:mm:ss");
 };
 
-export const InvalidObjectKeysDetection = (
-  body: object,
-  swaggerDto: object
-): boolean => {
+export const InvalidObjectKeysDetection = (body: object,swaggerDto: object): boolean => {
   const checkingUnAuthorizedKeys = Object.keys(body).filter((key) => {
     return Object.keys(swaggerDto).indexOf(key) === -1;
   });
@@ -41,24 +35,21 @@ export const InvalidObjectKeysDetection = (
   }
 };
 
-
-export const EmptyFieldsDetection = (
-  body: object,
-): boolean => {
-  const emptyFields = Object.values(body).filter((value):any => {
-     if (typeof value === 'number') {
-        if (value > 0) {
-          return undefined
-        }else{
-          return true;
-        }
-     }else if (typeof value === 'string'){
-        if (value !== '') {
-          return undefined
-        }else{
-          return true
-        }
-     }
+export const EmptyFieldsDetection = (body: object): boolean => {
+  const emptyFields = Object.values(body).filter((value): any => {
+    if (typeof value === "number") {
+      if (value > 0) {
+        return undefined;
+      } else {
+        return true;
+      }
+    } else if (typeof value === "string") {
+      if (value !== "") {
+        return undefined;
+      } else {
+        return true;
+      }
+    }
   });
   if ([...new Set(emptyFields)].length > 0) {
     return true;

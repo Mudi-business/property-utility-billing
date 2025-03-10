@@ -1,3 +1,4 @@
+//dto (Data Transfer Objects) for Authentication
 export interface LoginDto {
   user_id: string;
   access_token: string;

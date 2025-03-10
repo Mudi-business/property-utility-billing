@@ -9,6 +9,10 @@ import { HttpStatusCode } from "axios";
 import { UtilityBillRepository } from "../repositories/utilityBillRepository";
 import { requestUtilityBillSwaggerDto } from "../swagger/dto/utilityBIllSwaggerDto";
 
+
+
+// We use Typedi for Performing dependency Injection 
+// Below is Our Utility Bill Service with Typedi Utility Bill Repository Injection
 @Service()
 export class UtilityBillService {
   constructor(private utilityBillRepo: UtilityBillRepository) {}

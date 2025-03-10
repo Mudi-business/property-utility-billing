@@ -2,7 +2,7 @@
 export {};
 import { Model, UUIDV4 } from "sequelize";
 
-
+//Initializing our Login Model with Sequelize
 module.exports = (sequelize: any, DataTypes: any) => {
   class Logins extends Model {
     static associate(_: any) {}

@@ -9,6 +9,9 @@ import { PropertyTypeEnum } from "../enums/property";
 import { Op } from "sequelize";
 const db = require("../models");
 
+
+// We use Typedi for Performing dependency Injection 
+// Below is Our Property Repository with Sequelize Property Model
 @Service()
 export class PropertyRepository {
   findAll = async (pageNo: number, pageSize: number,search:string,filter:PropertyTypeEnum|string) => {

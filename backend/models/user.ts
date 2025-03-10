@@ -4,6 +4,7 @@ import { Model, UUIDV4 } from "sequelize";
 const bcrypt =  require('bcryptjs');
 const hashNo:any = process.env.PASSWORD_HASH;
 
+//Initializing our User Model with Sequelize
 module.exports = (sequelize: any, DataTypes: any) => {
   class Users extends Model {
     static associate(_: any) {}

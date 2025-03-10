@@ -6,6 +6,9 @@ import { HttpStatusCode } from "axios";
 import { PropertyRequestDto } from "../dto/property";
 import { requestPropertiesSwaggerDto } from "../swagger/dto/propertySwaggerDto";
 
+
+// We use Typedi for Performing dependency Injection 
+// Below is Our Property Service with Typedi Property Repository Injection
 @Service()
 export class PropertyService {
   constructor(private propertyRepo: PropertyRepository) {}
@@ -13,8 +16,6 @@ export class PropertyService {
   getAllProperties = async (req: Request, res: Response) => {
     try {
       const { page, size, search, filter }: any = req.query;
-      console.log("search:", search, "and filter :", filter);
-
       const PageNo = parseInt(page) * parseInt(size);
       const PageSize = parseInt(size);
       const propSearch =

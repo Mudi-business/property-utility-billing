@@ -4,6 +4,7 @@ import { Model, UUIDV4 } from "sequelize";
 import { PropertyTypeEnum } from "../enums/property";
 import { displaySwaggerEnumList } from "../utils/helpers";
 
+//Initializing our Property Model with Sequelize
 module.exports = (sequelize: any, DataTypes: any) => {
   class Properties extends Model {
     static associate(_: any) {}

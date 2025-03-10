@@ -4,9 +4,11 @@ import {
   UtilityBillRequestDto,
   UtilityBillsResponseDto,
 } from "../dto/utilityBill";
-
 const db = require("../models");
 
+
+// We use Typedi for Performing dependency Injection 
+// Below is Our Utility Bill Repository with Sequelize UtilityBill Model
 @Service()
 export class UtilityBillRepository {
   findAll = async (pageNo: number, pageSize: number) => {

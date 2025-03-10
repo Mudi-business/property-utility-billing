@@ -5,8 +5,13 @@ import { UtilityBillService } from "../services/utilityBillService";
 const router = express.Router();
 const utilityBillInstance = Container.get(UtilityBillService);
 const auth = require("../auth/auth");
- const Protect = require("../auth/protect");
+const Protect = require("../auth/protect");
 
+// Since We use swagger-autogen for out Api Documentation that help us performing our Api Test easily
+// Below is our swagger comments that demonstrate how to map our routes with swagger
+
+
+// Below are Our Utility Bills Routes with Typedi Utility Bill Service Injection
 router.get(
   "/utility/bills/pageable",
   auth,

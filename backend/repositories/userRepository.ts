@@ -2,6 +2,9 @@ import { Service } from "typedi";
 import { UserRequestDto, UserResponseDto } from "../dto/user";
 const db = require("../models");
 
+
+// We use Typedi for Performing dependency Injection 
+// Below is Our User Repository with Sequelize User Model
 @Service()
 export class UserRepository {
 

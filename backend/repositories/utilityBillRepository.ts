@@ -25,9 +25,9 @@ export class UtilityBillRepository {
   };
 
   findByPropertyId = async (property_id: string) => {
-    const bills: UtilityBillRequestDto[] = await db.UtilityBill.findAll({
+    const bills: UtilityBillsResponseDto[] = await db.UtilityBill.findAll({
       where: {
-        property_id,
+        property_id:property_id,
       },
     });
     return bills;

@@ -46,7 +46,7 @@ router.get(
 );
 
 router.get(
-  "/utility/bills",
+  "/utility/bills/:property_id",
   auth,
   Protect(),
   (req: Request, res: Response) => {
@@ -56,7 +56,7 @@ router.get(
     /* #swagger.security = [{
             "bearerAuth": []
     }] */
-    //  #swagger.parameters['id'] = { description: 'Property Id' }
+    //  #swagger.parameters['property_id'] = { description: 'Property Id' }
     /* #swagger.responses[200] = { 
                schema: { $ref: "#/definitions/ResponseUtilityBills" },
                description: 'OK' 

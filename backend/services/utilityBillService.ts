@@ -57,6 +57,8 @@ export class UtilityBillService {
     try {
       const id = req.params.property_id;
       const bill = await this.utilityBillRepo.findByPropertyId(id);
+      console.log('bills :',bill);
+      
       return res.status(HttpStatusCode.Ok).send(bill);
     } catch (error: any) {
       return res.status(HttpStatusCode.InternalServerError).send({

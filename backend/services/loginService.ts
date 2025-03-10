@@ -40,7 +40,7 @@ export class LoginService {
         },
         `${process.env.SECRET}`,
         {
-          expiresIn: `${process.env.ACCESS_TOKEN_EXPIRE}h`,
+          expiresIn: `${process.env.ACCESS_TOKEN_EXPIRE}`,
           algorithm: process.env.TOKEN_ALGORITHM,
           audience: process.env.TOKEN_AUDIENCE,
           issuer: user.email,
@@ -54,7 +54,7 @@ export class LoginService {
         },
         `${process.env.SECRET}`,
         {
-          expiresIn: `${process.env.REFRESH_TOKEN_EXPIRE}h`,
+          expiresIn: `${process.env.REFRESH_TOKEN_EXPIRE}`,
           algorithm: process.env.TOKEN_ALGORITHM,
           audience: process.env.TOKEN_AUDIENCE,
           issuer: user.email,
@@ -109,19 +109,42 @@ export class LoginService {
       });
     }
   };
-
+ 
   checkLoginExist = async (user:UserResponseDto) => {
     try {
       await this.issueToken(user);
-      const login: LoginResponseDto = await this.loginRepo.findById(user?.user_id);
+      const login: LoginResponseDto = await this.loginRepo.findByUserId(user?.user_id);
 
       if ((login?.access_token !== null || login?.refresh_token !== null) && login !=null ) {
+            const accessToken:any = login?.access_token;
+        var decoded: tokenSuccessDto = await jwt.verify(
+          accessToken,
+          process.env.SECRET
+        );
+        if (decoded?.data?.id !== undefined) {
           return {access_token:login?.access_token,refresh_token:login?.refresh_token}
+        } else {
+          const loginUpdatedList: number[] = await this.loginRepo.update({access_token:HttpStatusCode.Unauthorized,refresh_token:HttpStatusCode.Unauthorized},user?.user_id);
+          if (loginUpdatedList.length>0) {
+            return false
+          }else{
+            return {access_token:login?.access_token,refresh_token:login?.refresh_token}
+          }
+        }
       } else {
        return false
       }
     } catch (error: any) {
-      return false
+      if (error.name === "TokenExpiredError") {
+        const loginUpdatedList: number[] = await this.loginRepo.update({access_token:HttpStatusCode.Unauthorized,refresh_token:HttpStatusCode.Unauthorized},user?.user_id);
+        if (loginUpdatedList.length>0) {
+          return false
+        }else{
+          return {access_token:null,refresh_token:null}
+        }
+      } else {
+        return false
+      }
     }
   };
 
@@ -147,8 +170,7 @@ export class LoginService {
 
   logout = async (res:Response,user:UserResponseDto) => {
     try {
-      await this.issueToken(user);
-      const loginUpdatedList: number[] = await this.loginRepo.update({access_token:null,refresh_token:null},user?.user_id);
+      const loginUpdatedList: number[] = await this.loginRepo.update({access_token:HttpStatusCode.Unauthorized,refresh_token:HttpStatusCode.Unauthorized},user?.user_id);
       if (loginUpdatedList.length>0) {
         return res.status(HttpStatusCode.Ok).send({
           status: HttpStatusCode.Ok,
@@ -189,7 +211,7 @@ export class LoginService {
             status: HttpStatusCode.BadRequest,
             message: "Make sure all values are passed correct",
           });
-        } else {
+        } else {        
           const user = await this.userRepo.findById(decoded.data.id);
           this.issueToken(user);
           const login = await this.loginRepo.update(this._token, user.user_id);

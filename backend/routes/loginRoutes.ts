@@ -4,7 +4,6 @@ import { Container } from "typedi";
 import { LoginService } from "../services/loginService";
 import { UserResponseDto } from "../dto/user";
 import { AxiosError, HttpStatusCode } from "axios";
-import { LoginResponseDto } from "../dto/authentication";
 const router = express.Router();
 const loginInstance = Container.get(LoginService);
 const auth = require("../auth/auth");
@@ -37,7 +36,7 @@ router.post("/login", (req: Request, res: Response) => {
       if (user !== undefined) {
         loginInstance
           .checkLoginExist(user)
-          .then((exist: LoginResponseDto | boolean) => {
+          .then((exist: any) => {
             if (exist !== false) {             
               res.status(HttpStatusCode.Ok).send(exist);
             } else {
@@ -86,7 +85,7 @@ router.post(
                  description: 'OK' 
           } */
     // console.log("headers :", req.headers);
-    loginInstance.refresh_token(req, res);
+    loginInstance.logout(res,req.body);
   }
 );
 

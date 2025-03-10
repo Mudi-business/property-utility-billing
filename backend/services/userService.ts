@@ -44,7 +44,17 @@ export class UserService {
           });
         } else {
           const user = await this.userRepo.save(body);
-          return res.status(HttpStatusCode.Ok).send(user);
+          const newUser: any = {
+            user_id: user.user_id,
+            email: user.email,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            address: user.address,
+            updatedAt:user.updateAt,
+            createdAt: user.createdAt
+          };
+          delete newUser.password;
+          return res.status(HttpStatusCode.Ok).send(newUser);
         }
       }
     } catch (error: any) {

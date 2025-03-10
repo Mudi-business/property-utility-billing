@@ -1,5 +1,7 @@
 import { Service } from "typedi";
 import { LoginDto, LoginResponseDto } from "../dto/authentication";
+import { Op } from "sequelize";
+import { HttpStatusCode } from "axios";
 const db = require("../models");
 
 // We use Typedi for Performing dependency Injection 
@@ -17,10 +19,18 @@ export class LoginRepository {
     });
     return updated;
   };
-  findById = async (id: string) => {
+  findByUserId = async (id: string) => {
     const login: LoginResponseDto = await db.Login.findOne(
       {
-        where: { user_id: id },
+        where: { 
+          user_id: id ,
+          access_token: {
+            [Op.ne]:HttpStatusCode.Unauthorized
+          },
+          refresh_token: {
+            [Op.ne]:HttpStatusCode.Unauthorized
+          },
+        },
       }
     );
     return login;

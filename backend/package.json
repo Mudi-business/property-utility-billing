@@ -10,7 +10,7 @@
     "build": "npx tsc",
     "start": "nodemon index.js",
     "compile": "npx tsc",
-    "dev": "env-cmd -f .env.example concurrently \"npx tsc\" \"node dist/swagger/swagger.js\""
+    "dev": "env-cmd -f .env.dev concurrently \"npx tsc\" \"node dist/swagger/swagger.js\""
   },
   "repository": {
     "type": "git",

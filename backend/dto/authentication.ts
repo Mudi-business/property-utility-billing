@@ -1,3 +1,5 @@
+
+
 //dto (Data Transfer Objects) for Authentication
 export interface LoginDto {
   user_id: string;
@@ -10,8 +12,8 @@ export interface RefreshTokenDto {
 }
 
 export interface LoginResponseDto {
-  access_token: string|null;
-  refresh_token: string|null;
+  access_token: string|number;
+  refresh_token: string|number;
 }
 
 export interface UserLoginDto {

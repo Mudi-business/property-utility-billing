@@ -14,6 +14,8 @@ const cors = require("cors");
 //<==========================================================>
 const PropertyRoutes = require("./routes/propertyRoutes");
 const UtilityBillingRoutes = require("./routes/utilityBillRoutes");
+const UserRoutes = require("./routes/userRoutes");
+const LoginRoutes = require("./routes/loginRoutes");
 const swagger_json = require("./swagger/swagger-docs.json");
 const swaggerFile = require("./swagger/swagger_output.json");
 const db = require("./models/index.js");
@@ -41,6 +43,8 @@ app.use("/", swagger_json);
 //<==================================
 app.use("/", PropertyRoutes);
 app.use("/", UtilityBillingRoutes);
+app.use("/",UserRoutes)
+app.use("/",LoginRoutes)
 //==================================>
 //Routes
 

@@ -4,13 +4,13 @@ import Container from "typedi";
 import { UtilityBillService } from "../services/utilityBillService";
 const router = express.Router();
 const utilityBillInstance = Container.get(UtilityBillService);
-// const auth = require("../auth/auth");
-// const Protect = require("../auth/protectRoutesAuth");
+const auth = require("../auth/auth");
+ const Protect = require("../auth/protect");
 
 router.get(
   "/utility/bills/pageable",
-  //   auth,
-  //   Protect(),
+  auth,
+  Protect(),
   async (req: Request, res: Response) => {
     // #swagger.tags = ['UtilityBill']
     // #swagger.summary = 'Utility Bills..'
@@ -42,8 +42,8 @@ router.get(
 
 router.get(
   "/utility/bill/:id",
-  //   auth,
-  //   Protect(),
+  auth,
+  Protect(),
   (req: Request, res: Response) => {
     // #swagger.tags = ['UtilityBill']
     // #swagger.summary = 'Get Utility Bill By Id..'
@@ -62,8 +62,8 @@ router.get(
 
 router.post(
   "/utility/bill",
-  // auth,
-  //  Protect(),
+  auth,
+  Protect(),
   (req: Request, res: Response) => {
     // #swagger.tags = ['UtilityBill']
     // #swagger.summary = 'Create Utility Bill..'

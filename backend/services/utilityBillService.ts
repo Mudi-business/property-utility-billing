@@ -1,9 +1,13 @@
 import { Service } from "typedi";
 import { Request, Response } from "express";
-import { calculateTotalPages } from "../utils/helpers";
+import {
+  calculateTotalPages,
+  EmptyFieldsDetection,
+  InvalidObjectKeysDetection,
+} from "../utils/helpers";
 import { HttpStatusCode } from "axios";
 import { UtilityBillRepository } from "../repositories/utilityBillRepository";
-
+import { requestUtilityBillSwaggerDto } from "../swagger/dto/utilityBIllSwaggerDto";
 
 @Service()
 export class UtilityBillService {
@@ -47,8 +51,23 @@ export class UtilityBillService {
   saveUtilityBill = async (req: Request, res: Response) => {
     try {
       const body = req.body;
-      const bill = await this.utilityBillRepo.save(body);
-      return res.status(HttpStatusCode.Ok).send(bill);
+
+      if (InvalidObjectKeysDetection(body, requestUtilityBillSwaggerDto)) {
+        return res.status(HttpStatusCode.BadRequest).send({
+          status: HttpStatusCode.BadRequest,
+          message: "UnAuthorized Field Found",
+        });
+      } else {
+        if (EmptyFieldsDetection(body)) {
+          return res.status(HttpStatusCode.BadRequest).send({
+            status: HttpStatusCode.BadRequest,
+            message: "Make sure all values are passed correct",
+          });
+        } else {
+          const bill = await this.utilityBillRepo.save(body);
+          return res.status(HttpStatusCode.Ok).send(bill);
+        }
+      }
     } catch (error: any) {
       return res.status(HttpStatusCode.InternalServerError).send({
         status: HttpStatusCode.InternalServerError,

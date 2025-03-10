@@ -1,4 +1,6 @@
+import { requestLoginSwaggerDto, requestRefreshTokenSwaggerDto, responseLoginSwaggerDto } from "./dto/LoginSwaggerDto";
 import { requestPropertiesSwaggerDto, requestPropertyFilterSearch, responsePropertiesPageableSwaggerDto, responsePropertySwaggerDto } from "./dto/propertySwaggerDto";
+import { requestUserSwaggerDto, responseUserSwaggerDto } from "./dto/userSwaggerDto";
 import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, responseUtilityBillSwaggerDto } from "./dto/utilityBIllSwaggerDto";
 
   
@@ -7,6 +9,8 @@ import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, r
   const endpointsFiles = [
     "../routes/propertyRoutes.js",
     "../routes/utilityBillRoutes.js",
+    "../routes/userRoutes.js",
+    "../routes/loginRoutes.js"
   ];
   const doc = {
     info: {
@@ -54,6 +58,14 @@ import { requestUtilityBillSwaggerDto, responseUtilityBillsPageableSwaggerDto, r
       ResponseUtilityBill: responseUtilityBillSwaggerDto,
       ResponseUtilityBillsPageable: responseUtilityBillsPageableSwaggerDto,
 
+      //User
+      RequestUser:requestUserSwaggerDto,
+      ResponseUser:responseUserSwaggerDto,
+
+      //Authentication
+      RequestLogin:requestLoginSwaggerDto,
+      RequestRefreshToken:requestRefreshTokenSwaggerDto,
+      ResponseLogin:responseLoginSwaggerDto
 
 
     },

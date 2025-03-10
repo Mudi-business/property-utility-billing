@@ -67,7 +67,7 @@ export class PropertyService {
       if (InvalidObjectKeysDetection(body,requestPropertiesSwaggerDto)) {
         return res.status(HttpStatusCode.BadRequest).send({
           status: HttpStatusCode.BadRequest,
-          message: "UnAuthorized Filed Found",
+          message: "UnAuthorized Field Found",
         });
       } else {
         if (EmptyFieldsDetection(body)) {

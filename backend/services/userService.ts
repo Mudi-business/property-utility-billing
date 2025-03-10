@@ -1,0 +1,56 @@
+import { Service } from "typedi";
+import { Request, Response } from "express";
+import {
+  EmptyFieldsDetection,
+  InvalidObjectKeysDetection,
+} from "../utils/helpers";
+import { HttpStatusCode } from "axios";
+import { UserRepository } from "../repositories/userRepository";
+import { requestUserSwaggerDto } from "../swagger/dto/userSwaggerDto";
+
+@Service()
+export class UserService {
+  constructor(private userRepo: UserRepository) {}
+
+
+  getUserById = async (req: Request, res: Response) => {
+    try {
+      const id = req.params.id;
+      const user = await this.userRepo.findById(id);
+      return res.status(HttpStatusCode.Ok).send(user);
+    } catch (error: any) {
+      return res.status(HttpStatusCode.InternalServerError).send({
+        status: HttpStatusCode.InternalServerError,
+        message: error?.name,
+      });
+    }
+  };
+
+  saveUser = async (req: Request, res: Response) => {
+    try {
+      const body = req.body;
+
+      if (InvalidObjectKeysDetection(body, requestUserSwaggerDto)) {
+        return res.status(HttpStatusCode.BadRequest).send({
+          status: HttpStatusCode.BadRequest,
+          message: "UnAuthorized Field Found",
+        });
+      } else {
+        if (EmptyFieldsDetection(body)) {
+          return res.status(HttpStatusCode.BadRequest).send({
+            status: HttpStatusCode.BadRequest,
+            message: "Make sure all values are passed correct",
+          });
+        } else {
+          const user = await this.userRepo.save(body);
+          return res.status(HttpStatusCode.Ok).send(user);
+        }
+      }
+    } catch (error: any) {
+      return res.status(HttpStatusCode.InternalServerError).send({
+        status: HttpStatusCode.InternalServerError,
+        message: error?.name,
+      });
+    }
+  };
+}

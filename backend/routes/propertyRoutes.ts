@@ -4,13 +4,13 @@ import { Container } from "typedi";
 import { PropertyService } from "../services/propertyService";
 const router = express.Router();
 const propertyInstance = Container.get(PropertyService);
-// const auth = require("../auth/auth");
-// const Protect = require("../auth/protectRoutesAuth");
+const auth = require("../auth/auth");
+ const Protect = require("../auth/protect");
 
 router.get(
   "/properties/pageable",
-  //   auth,
-  //   Protect(),
+    auth,
+    Protect(),
   async (req: Request, res: Response) => {
     // #swagger.tags = ['Property']
     // #swagger.summary = 'Get Properties..'
@@ -54,8 +54,8 @@ router.get(
 
 router.get(
   "/property/:id",
-  //   auth,
-  //   Protect(),
+  auth,
+  Protect(),
   (req: Request, res: Response) => {
     // #swagger.tags = ['Property']
     // #swagger.summary = 'Get Property By Id..'
@@ -74,8 +74,8 @@ router.get(
 
 router.post(
   "/property",
-  // auth,
-  //  Protect(),
+  auth,
+  Protect(),
   (req: Request, res: Response) => {
     // #swagger.tags = ['Property']
     // #swagger.summary = 'Create Property..'

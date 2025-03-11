@@ -241,13 +241,14 @@ export const Property: React.FC = () => {
                             </td>
                             <td className="p-4 border-b border-slate-300 bg-slate-50">
                               <a
+                                
                                 role="button"
                                 onClick={() =>
                                   navigate("utility/bills", {
                                     state: { data: property?.property_id },
                                   })
                                 }
-                                className="text-sm font-semibold text-slate-900 shadow-md p-3 "
+                                className="text-sm font-semibold bg-slate-500 text-white shadow-md p-3 rounded-md"
                               >
                                 Utility Bills
                               </a>

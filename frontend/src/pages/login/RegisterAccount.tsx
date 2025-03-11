@@ -1,11 +1,11 @@
-import { HttpStatusCode } from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserDto, UserRequestDto } from "~/dto/user";
 import { CREATE_USER } from "../../services/user";
 
 export const RegisterAccount: React.FC = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState<string>("");
   const [formLoader, setFormLoader] = React.useState<boolean>(false);
   const handliOnClickCancel = () => setFormData(initialForm);
   const initialForm = {
@@ -20,6 +20,9 @@ export const RegisterAccount: React.FC = () => {
   return (
     <div className="flex flex-row justify-center w-full">
       <div className="shadow-lg p-5">
+        <p className="flex justify-center mt-6 text-sm font-semibold text-red-500 mb-3">
+          {error}
+        </p>
         <h3 className="font-sans font-semibold text-center text-xl">
           Register Account
         </h3>
@@ -30,15 +33,15 @@ export const RegisterAccount: React.FC = () => {
           onSubmit={(e) =>
             onSubmit(e)(
               formData,
-              //   FormNotification,
               setFormLoader,
               setFormData,
               navigate,
+              //FormNotification,
+              setError,
               initialForm
             )
           }
         >
-
           {/* START OF ACCOUNT REGISTRATION FORM FIELDS */}
           <div className="mb-1 flex flex-col gap-6">
             <div className="w-full max-w-sm min-w-[200px]">
@@ -134,7 +137,7 @@ export const RegisterAccount: React.FC = () => {
           {/* START OF ACTION BUTTONS */}
           <div className="flex flex-row justify-center gap-5">
             <button
-              className="mt-4 w-full rounded-md bg-green-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              className="mt-4 w-full rounded-md bg-green-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-slate-700 hover:bg-green-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="submit"
             >
               Register
@@ -158,7 +161,7 @@ export const RegisterAccount: React.FC = () => {
               Sign in
             </a>
           </p>
-         {/* END OF ACTION BUTTONS */}
+          {/* END OF ACTION BUTTONS */}
         </form>
         {/* END OF ACCOUNT REGISTRATION FORM */}
       </div>
@@ -173,6 +176,7 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     setLoader: (status: boolean) => void,
     setFormData: (data: UserRequestDto) => void,
     navigate: (value: any) => void,
+    setError: (value: any) => void,
     initialFormData: UserRequestDto
   ) {
     e.preventDefault();
@@ -186,20 +190,24 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         navigate("/");
         setFormData(initialFormData);
       } else {
-        console.log("Error occured", HttpStatusCode.NotFound);
+        setError("User registration failed");
+        // console.log("Error occured", HttpStatusCode.NotFound);
       }
     } catch (error: any) {
       // console.log('error :',error);
 
       if (typeof error?.response?.data !== "object") {
+        setError(error?.response?.data);
         //   await notification(NotificationEnum.error, error?.response?.data);
       } else {
         if (error?.response?.data?.message !== undefined) {
+          setError(error?.response?.data?.message);
           // await notification(
           //   NotificationEnum.error,
           //   error?.response?.data?.message
           // );
         } else {
+          setError(error?.response?.data?.error);
           // await notification(
           //   NotificationEnum.error,
           //   error?.response?.data?.error

@@ -1,5 +1,5 @@
 import { HttpStatusCode } from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginDto, LoginRequestDto } from "~/dto/login";
 import { LOGIN_USER } from "../../services/login";
@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [error, setError] = useState<string>("");
   const [formLoader, setFormLoader] = React.useState<boolean>(false);
   const initialForm = {
     email: "",
@@ -18,8 +19,12 @@ export const LoginPage: React.FC = () => {
   const [formData, setFormData] = React.useState<LoginRequestDto>(initialForm);
   return (
     <div className="flex flex-row justify-center w-full">
+  
       <div className="shadow-lg p-5">
-        <h3 className="font-sans font-semibold text-center text-xl">
+      <p className="flex justify-center mt-6 text-sm font-semibold text-red-500 mb-3">
+        {error}
+      </p>
+        <h3 className="font-sans font-semibold text-center text-xl ">
           Property Management System
         </h3>
 
@@ -34,6 +39,7 @@ export const LoginPage: React.FC = () => {
               setFormData,
               navigate,
               dispatch,
+              setError,
               initialForm
             )
           }
@@ -110,6 +116,7 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     setFormData: (data: LoginRequestDto) => void,
     navigate: (value: any) => void,
     dispatch: (value: any) => void,
+    setError: (value: any) => void,
     initialFormData: LoginRequestDto
   ) {
     e.preventDefault();
@@ -118,28 +125,33 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
       const response = await LOGIN_USER({ data });
       const loginResponse: LoginDto = response.data;
       if (loginResponse?.access_token !== undefined) {
-          if (loginResponse?.access_token !== null) {
-            dispatch(LoginActions.setToken(JSON.stringify(loginResponse)));
-            navigate("/home");
-            setFormData(initialFormData);
-          } else {
-            // console.log("Contact Administrator", HttpStatusCode.InternalServerError);
-          }
+        if (loginResponse?.access_token !== null) {
+          dispatch(LoginActions.setToken(JSON.stringify(loginResponse)));
+          navigate("/home");
+          setFormData(initialFormData);
+        } else {
+          setError("Something went wrong, Please contact administrator")
+          // console.log("Contact Administrator", HttpStatusCode.InternalServerError);
+        }
       } else {
+        setError("user not found")
         // console.log("Error occured", HttpStatusCode.NotFound);
       }
     } catch (error: any) {
       // console.log('error :',error);
 
       if (typeof error?.response?.data !== "object") {
+        setError(error?.response?.data)
         //   await notification(NotificationEnum.error, error?.response?.data);
       } else {
         if (error?.response?.data?.message !== undefined) {
+          setError(error?.response?.data?.message)
           // await notification(
           //   NotificationEnum.error,
           //   error?.response?.data?.message
           // );
         } else {
+          setError(error?.response?.data?.error)
           // await notification(
           //   NotificationEnum.error,
           //   error?.response?.data?.error
@@ -148,6 +160,9 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
       }
       setLoader(false);
     } finally {
+      setTimeout(() => {
+        setError("")
+      }, 2000);
       setLoader(false);
     }
   };

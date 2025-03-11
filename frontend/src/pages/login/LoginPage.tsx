@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginDto, LoginRequestDto, tokenSuccessDto } from "~/dto/login";
 import { LOGIN_USER } from "../../services/login";
 import { LoginActions } from "../../store/slices/LoginSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { Bounce, toast } from "react-toastify";
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const tokenDataa = useSelector((state: any) => state.login);
+
+  useEffect(() => {
+    const token: { access_token: string; refresh_token: string } = JSON.parse(
+      typeof tokenDataa?.token === "object"
+        ? JSON.stringify(tokenDataa?.token)
+        : tokenDataa?.token
+    );
+
+    if (token?.access_token !== "") {
+      navigate("/home");
+    }
+  }, []);
   const dispatch = useDispatch();
   const [_, setFormLoader] = React.useState<boolean>(false);
   const initialForm = {

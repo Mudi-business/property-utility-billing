@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserDto, UserRequestDto } from "~/dto/user";
 import { CREATE_USER } from "../../services/user";
 import { Bounce, toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 export const RegisterAccount: React.FC = () => {
   const navigate = useNavigate();
+  const tokenDataa = useSelector((state: any) => state.login);
+  
+  useEffect(() => {
+    const token: { access_token: string; refresh_token: string } = JSON.parse(
+      typeof tokenDataa?.token === "object"
+        ? JSON.stringify(tokenDataa?.token)
+        : tokenDataa?.token
+    );
+    if (token?.access_token !== "") {
+      navigate("/home");
+    }
+  }, []);
+
   const [_, setFormLoader] = React.useState<boolean>(false);
 
   const initialForm = {
@@ -119,7 +133,7 @@ export const RegisterAccount: React.FC = () => {
                 Password
               </label>
               <input
-               value={formData.password}
+                value={formData.password}
                 onChange={(event: any) => {
                   setFormData((prev) => ({
                     ...prev,
@@ -186,7 +200,7 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
       if (savedUser?.user_id !== undefined) {
         navigate("/");
         setFormData(initialFormData);
-        toast.success('User has been registerd', {
+        toast.success("User has been registerd", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -196,7 +210,7 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
           progress: undefined,
           theme: "light",
           transition: Bounce,
-          })
+        });
       } else {
         toast.error(`User registration failed`, {
           position: "top-right",
@@ -208,7 +222,7 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
           progress: undefined,
           theme: "light",
           transition: Bounce,
-          })
+        });
       }
     } catch (error: any) {
       if (typeof error?.response?.data !== "object") {
@@ -222,8 +236,7 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
           progress: undefined,
           theme: "light",
           transition: Bounce,
-          })
-
+        });
       } else {
         if (error?.response?.data?.message !== undefined) {
           toast.error(error?.response?.data?.message, {
@@ -236,7 +249,7 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
             progress: undefined,
             theme: "light",
             transition: Bounce,
-            })
+          });
         } else {
           toast.error(error?.response?.data?.error, {
             position: "top-right",
@@ -248,7 +261,7 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
             progress: undefined,
             theme: "light",
             transition: Bounce,
-            })
+          });
         }
       }
       setLoader(false);

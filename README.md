@@ -25,6 +25,8 @@ Install dependencies:
 
 
 Set up the database:
+**Note:**
+This project uses Sequelize as the Object-Relational Mapping (ORM) tool to interact with the database. The database schema is already defined in the models, so no manual table creation is required.
 - Create a MySQL Database
 - Update the database connection details in the .env.dev file below *Backend Database Configuration*
 

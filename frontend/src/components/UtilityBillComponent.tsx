@@ -1,17 +1,18 @@
-import { HttpStatusCode } from "axios";
-import React, { useState } from "react";
+
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BillDto, BillRequestDto } from "~/dto/bills";
 import { UtilityBillTypeEnum } from "../enums/bill";
 import { CREATE_UTILITY_BILLL } from "../services/bills";
 import { displayEnumList } from "../utils/helpers";
 import { AppCard } from "../utils/components/AppCard";
+import { Bounce, toast } from "react-toastify";
 
 export const UtilityBillComponent: React.FC = () => {
   const [_, setFormLoader] = React.useState<boolean>(false);
   const navigate = useNavigate();
   const handliOnClickCancel = () => setFormData(initialForm);
-  const [error, setError] = useState<string>("");
+
   const { state } = useLocation();
   const property_id: string = state?.data;
 
@@ -38,11 +39,6 @@ export const UtilityBillComponent: React.FC = () => {
         }
         middleStack={
           <div className="border p-5 bg-slate-50">
-            <div className="flex flex-row justify-center mb-3">
-              <p className="flex justify-center mt-6 text-sm font-semibold text-red-500 mb-3">
-                {error}
-              </p>
-            </div>
 
             <h2 className="font-sans font-bold text-2xl">Add Utility Bill</h2>
 
@@ -56,7 +52,6 @@ export const UtilityBillComponent: React.FC = () => {
                   setFormLoader,
                   setFormData,
                   navigate,
-                  setError,
                   initialForm
                 )
               }
@@ -177,7 +172,6 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     setLoader: (status: boolean) => void,
     setFormData: (data: BillRequestDto) => void,
     navigate: (value: any) => void,
-    setError: (value: any) => void,
     initialFormData: BillRequestDto
   ) {
     e.preventDefault();
@@ -188,18 +182,70 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
       if (savedUtilityBill?.property_id !== undefined) {
         navigate(-1);
         setFormData(initialFormData);
+        toast.success(`Utility bill has been registerd`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       } else {
-        setError("Failed to Register Utility Bill");
-        console.log("Error occured", HttpStatusCode.NotFound);
+        toast.error('Failed to Register Utility Bill', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          })
+
       }
     } catch (error: any) {
       if (typeof error?.response?.data !== "object") {
-        setError(error?.response?.data);
+        toast.error(error?.response?.data, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          })
       } else {
         if (error?.response?.data?.message !== undefined) {
-          setError(error?.response?.data?.message);
+          toast.error(error?.response?.data?.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+            })
+
         } else {
-          setError(error?.response?.data?.error);
+          toast.error(error?.response?.data?.error, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+            })
         }
       }
       setLoader(false);

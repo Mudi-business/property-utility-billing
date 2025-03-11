@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { UserDto, UserRequestDto } from "~/dto/user";
 import { CREATE_USER } from "../../services/user";
+import { Bounce, toast } from "react-toastify";
 
 export const RegisterAccount: React.FC = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState<string>("");
   const [_, setFormLoader] = React.useState<boolean>(false);
-  const handliOnClickCancel = () => setFormData(initialForm);
+
   const initialForm = {
     email: "",
     first_name: "",
@@ -15,14 +15,11 @@ export const RegisterAccount: React.FC = () => {
     address: "",
     password: "",
   };
-
+  const handliOnClickCancel = () => setFormData(initialForm);
   const [formData, setFormData] = React.useState<UserRequestDto>(initialForm);
   return (
     <div className="flex flex-row justify-center w-full">
       <div className="shadow-lg p-5">
-        <p className="flex justify-center mt-6 text-sm font-semibold text-red-500 mb-3">
-          {error}
-        </p>
         <h3 className="font-sans font-semibold text-center text-xl">
           Register Account
         </h3>
@@ -37,7 +34,6 @@ export const RegisterAccount: React.FC = () => {
               setFormData,
               navigate,
               //FormNotification,
-              setError,
               initialForm
             )
           }
@@ -49,6 +45,7 @@ export const RegisterAccount: React.FC = () => {
                 First Name
               </label>
               <input
+                value={formData.first_name}
                 onChange={(event: any) => {
                   setFormData((prev) => ({
                     ...prev,
@@ -67,6 +64,7 @@ export const RegisterAccount: React.FC = () => {
                 Last Name
               </label>
               <input
+                value={formData.last_name}
                 onChange={(event: any) => {
                   setFormData((prev) => ({
                     ...prev,
@@ -83,6 +81,7 @@ export const RegisterAccount: React.FC = () => {
             <div className="w-full max-w-sm min-w-[200px]">
               <label className="block mb-2 text-sm text-slate-600">Email</label>
               <input
+                value={formData.email}
                 onChange={(event: any) => {
                   setFormData((prev) => ({
                     ...prev,
@@ -101,6 +100,7 @@ export const RegisterAccount: React.FC = () => {
                 Address
               </label>
               <input
+                value={formData.address}
                 onChange={(event: any) => {
                   setFormData((prev) => ({
                     ...prev,
@@ -119,6 +119,7 @@ export const RegisterAccount: React.FC = () => {
                 Password
               </label>
               <input
+               value={formData.password}
                 onChange={(event: any) => {
                   setFormData((prev) => ({
                     ...prev,
@@ -175,7 +176,6 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     setLoader: (status: boolean) => void,
     setFormData: (data: UserRequestDto) => void,
     navigate: (value: any) => void,
-    setError: (value: any) => void,
     initialFormData: UserRequestDto
   ) {
     e.preventDefault();
@@ -186,17 +186,69 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
       if (savedUser?.user_id !== undefined) {
         navigate("/");
         setFormData(initialFormData);
+        toast.success('User has been registerd', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          })
       } else {
-        setError("User registration failed");
+        toast.error(`User registration failed`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          })
       }
     } catch (error: any) {
       if (typeof error?.response?.data !== "object") {
-        setError(error?.response?.data);
+        toast.error(error?.response?.data, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          })
+
       } else {
         if (error?.response?.data?.message !== undefined) {
-          setError(error?.response?.data?.message);
+          toast.error(error?.response?.data?.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+            })
         } else {
-          setError(error?.response?.data?.error);
+          toast.error(error?.response?.data?.error, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+            })
         }
       }
       setLoader(false);

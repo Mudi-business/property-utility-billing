@@ -1,15 +1,15 @@
-
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { LoginDto, LoginRequestDto } from "~/dto/login";
+import { LoginDto, LoginRequestDto, tokenSuccessDto } from "~/dto/login";
 import { LOGIN_USER } from "../../services/login";
 import { LoginActions } from "../../store/slices/LoginSlice";
 import { useDispatch } from "react-redux";
+import { jwtDecode } from "jwt-decode";
+import { Bounce, toast } from "react-toastify";
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [error, setError] = useState<string>("");
   const [_, setFormLoader] = React.useState<boolean>(false);
   const initialForm = {
     email: "",
@@ -19,11 +19,7 @@ export const LoginPage: React.FC = () => {
   const [formData, setFormData] = React.useState<LoginRequestDto>(initialForm);
   return (
     <div className="flex flex-row justify-center w-full">
-  
       <div className="shadow-lg p-5">
-      <p className="flex justify-center mt-6 text-sm font-semibold text-red-500 mb-3">
-        {error}
-      </p>
         <h3 className="font-sans font-semibold text-center text-xl ">
           Property Management System
         </h3>
@@ -34,12 +30,11 @@ export const LoginPage: React.FC = () => {
           onSubmit={(e) =>
             onSubmit(e)(
               formData,
-              //FormNotification,
+              // FormNotification,
               setFormLoader,
               setFormData,
               navigate,
               dispatch,
-              setError,
               initialForm
             )
           }
@@ -112,11 +107,11 @@ export const LoginPage: React.FC = () => {
 function onSubmit(e: React.FormEvent<HTMLFormElement>) {
   return async function (
     data: LoginRequestDto,
+    // notification: (type: string, message: string) => any,
     setLoader: (status: boolean) => void,
     setFormData: (data: LoginRequestDto) => void,
     navigate: (value: any) => void,
     dispatch: (value: any) => void,
-    setError: (value: any) => void,
     initialFormData: LoginRequestDto
   ) {
     e.preventDefault();
@@ -126,30 +121,90 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
       const loginResponse: LoginDto = response.data;
       if (loginResponse?.access_token !== undefined) {
         if (loginResponse?.access_token !== null) {
+          const data: tokenSuccessDto = jwtDecode(loginResponse?.access_token);
           dispatch(LoginActions.setToken(JSON.stringify(loginResponse)));
-          navigate("/home");
           setFormData(initialFormData);
+
+          navigate("/home");
+          toast.success(`Welcome ${data.iss}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
         } else {
-          setError("Something went wrong, Please contact administrator")
+          toast.error(`Something went wrong, Please contact administrator`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
         }
       } else {
-        setError("user not found")
+        toast.error(`user not found`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       }
     } catch (error: any) {
       if (typeof error?.response?.data !== "object") {
-        setError(error?.response?.data)
+        toast.error(error?.response?.data, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       } else {
         if (error?.response?.data?.message !== undefined) {
-          setError(error?.response?.data?.message)
+          toast.error(error?.response?.data?.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
         } else {
-          setError(error?.response?.data?.error)
+          toast.error(error?.response?.data?.error, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
         }
       }
       setLoader(false);
     } finally {
-      setTimeout(() => {
-        setError("")
-      }, 2000);
       setLoader(false);
     }
   };

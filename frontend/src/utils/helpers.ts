@@ -22,3 +22,4 @@ export const calculatePaginatedNumber = function (props: {
 }) {
   return (props.pageNumber) * props.pageSize + (props.index + 1);
 };
+

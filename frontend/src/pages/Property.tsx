@@ -51,7 +51,7 @@ export const Property: React.FC = () => {
           totalItems: propertiesData.totalItems,
         }));
       } catch (error) {
-        console.log("error :", error);
+        // console.log("error :", error);
       }
     };
     fetchProperties();

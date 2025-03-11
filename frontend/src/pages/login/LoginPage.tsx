@@ -1,4 +1,4 @@
-import { HttpStatusCode } from "axios";
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginDto, LoginRequestDto } from "~/dto/login";
@@ -10,7 +10,7 @@ export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState<string>("");
-  const [formLoader, setFormLoader] = React.useState<boolean>(false);
+  const [_, setFormLoader] = React.useState<boolean>(false);
   const initialForm = {
     email: "",
     password: "",
@@ -131,31 +131,18 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
           setFormData(initialFormData);
         } else {
           setError("Something went wrong, Please contact administrator")
-          // console.log("Contact Administrator", HttpStatusCode.InternalServerError);
         }
       } else {
         setError("user not found")
-        // console.log("Error occured", HttpStatusCode.NotFound);
       }
     } catch (error: any) {
-      // console.log('error :',error);
-
       if (typeof error?.response?.data !== "object") {
         setError(error?.response?.data)
-        //   await notification(NotificationEnum.error, error?.response?.data);
       } else {
         if (error?.response?.data?.message !== undefined) {
           setError(error?.response?.data?.message)
-          // await notification(
-          //   NotificationEnum.error,
-          //   error?.response?.data?.message
-          // );
         } else {
           setError(error?.response?.data?.error)
-          // await notification(
-          //   NotificationEnum.error,
-          //   error?.response?.data?.error
-          // );
         }
       }
       setLoader(false);

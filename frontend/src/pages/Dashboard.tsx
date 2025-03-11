@@ -13,7 +13,7 @@ import { AppCard } from "../utils/components/AppCard";
 import { GET_ALL_PROPERTIES } from "../services/property";
 import { PropertyDto, PropertyPageableDto } from "../dto/property";
 import { GET_UTILITY_BILL_BY_PROPERTY_ID } from "../services/bills";
-import { BillDto, BillPageableDto } from "../dto/bills";
+import { BillDto } from "../dto/bills";
 import { ConvertSysDateToHumanDate } from "../utils/helpers";
 
 ChartJS.register(
@@ -33,7 +33,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: "Chart.js Bar Chart",
+      text: "PMS properties and Utility Bills Summary",
     },
   },
 };
@@ -54,13 +54,13 @@ export function Dashboard() {
   };
 
   const [formData, setFormData] = React.useState<propBill>(initialForm);
-  const [labels, setLabels] = useState<string[]>([]);
+  const [_, setLabels] = useState<string[]>([]);
   const initialData = {
     labels: [],
     datasets: [
       {
         label: "Dataset 1",
-        data: [10, 20, 30, 40, 50, 60, 80],
+        data: [],
         backgroundColor: graphColor,
       },
     ],

@@ -1,5 +1,5 @@
 import { HttpStatusCode } from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BillDto, BillRequestDto } from "~/dto/bills";
 import { UtilityBillTypeEnum } from "../enums/bill";
@@ -8,9 +8,10 @@ import { displayEnumList } from "../utils/helpers";
 import { AppCard } from "../utils/components/AppCard";
 
 export const UtilityBillComponent: React.FC = () => {
-  const [formLoader, setFormLoader] = React.useState<boolean>(false);
+  const [_, setFormLoader] = React.useState<boolean>(false);
   const navigate = useNavigate();
   const handliOnClickCancel = () => setFormData(initialForm);
+  const [error, setError] = useState<string>("");
   const { state } = useLocation();
   const property_id: string = state?.data;
 
@@ -37,6 +38,12 @@ export const UtilityBillComponent: React.FC = () => {
         }
         middleStack={
           <div className="border p-5 bg-slate-50">
+            <div className="flex flex-row justify-center mb-3">
+              <p className="flex justify-center mt-6 text-sm font-semibold text-red-500 mb-3">
+                {error}
+              </p>
+            </div>
+
             <h2 className="font-sans font-bold text-2xl">Add Utility Bill</h2>
 
             {/* START OF UTILITY BILL FORM */}
@@ -49,11 +56,11 @@ export const UtilityBillComponent: React.FC = () => {
                   setFormLoader,
                   setFormData,
                   navigate,
+                  setError,
                   initialForm
                 )
               }
             >
-
               {/* START OF UTILITY BILL FORM FIELDS */}
               <div className="w-full max-w-sm min-w-[200px] mt-5">
                 <label className="block mb-2 text-sm text-slate-600">
@@ -170,6 +177,7 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     setLoader: (status: boolean) => void,
     setFormData: (data: BillRequestDto) => void,
     navigate: (value: any) => void,
+    setError: (value: any) => void,
     initialFormData: BillRequestDto
   ) {
     e.preventDefault();
@@ -181,24 +189,17 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         navigate(-1);
         setFormData(initialFormData);
       } else {
+        setError("Failed to Register Utility Bill");
         console.log("Error occured", HttpStatusCode.NotFound);
       }
     } catch (error: any) {
-      // console.log('error :',error);
-
       if (typeof error?.response?.data !== "object") {
-        //   await notification(NotificationEnum.error, error?.response?.data);
+        setError(error?.response?.data);
       } else {
         if (error?.response?.data?.message !== undefined) {
-          // await notification(
-          //   NotificationEnum.error,
-          //   error?.response?.data?.message
-          // );
+          setError(error?.response?.data?.message);
         } else {
-          // await notification(
-          //   NotificationEnum.error,
-          //   error?.response?.data?.error
-          // );
+          setError(error?.response?.data?.error);
         }
       }
       setLoader(false);

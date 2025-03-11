@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PropertyDto, PropertyRequestDto } from "../dto/property";
 import { PropertyTypeEnum } from "../enums/property";
 import { displayEnumList } from "../utils/helpers";
 import { CREATE_PROPERTY } from "../services/property";
-import { HttpStatusCode } from "axios";
 import { AppCard } from "../utils/components/AppCard";
 
 export const PropertyComponent: React.FC = () => {
@@ -13,7 +12,8 @@ export const PropertyComponent: React.FC = () => {
     property_address: "",
     property_type: "",
   };
-  const [formLoader, setFormLoader] = React.useState<boolean>(false);
+  const [_, setFormLoader] = React.useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
   const handliOnClickCancel = () => setFormData(initialForm);
   const [formData, setFormData] =
@@ -33,6 +33,12 @@ export const PropertyComponent: React.FC = () => {
       }
       middleStack={
         <div className="border p-5 bg-slate-50">
+          <div className="flex flex-row justify-center mb-3">
+            <p className="flex justify-center mt-6 text-sm font-semibold text-red-500 mb-3">
+              {error}
+            </p>
+          </div>
+
           <h2 className="font-sans font-bold text-2xl">Add Property</h2>
 
           {/* START PROPERTY FORM */}
@@ -45,11 +51,11 @@ export const PropertyComponent: React.FC = () => {
                 setFormLoader,
                 setFormData,
                 navigate,
+                setError,
                 initialForm
               )
             }
           >
-
             {/* START OF FORM FIELD */}
             <div className="w-full max-w-sm min-w-[200px]">
               <label className="block mb-2 text-sm text-slate-600">
@@ -70,7 +76,6 @@ export const PropertyComponent: React.FC = () => {
               />
             </div>
 
-
             <div className="w-full max-w-sm min-w-[200px] mt-5">
               <label className="block mb-2 text-sm text-slate-600">
                 Property Address
@@ -89,7 +94,6 @@ export const PropertyComponent: React.FC = () => {
                 placeholder="Enter property address..."
               />
             </div>
-
 
             <div className="w-full max-w-sm min-w-[200px] mt-5">
               <label className="block mb-2 text-sm text-slate-600">
@@ -134,7 +138,7 @@ export const PropertyComponent: React.FC = () => {
               </div>
             </div>
             {/* END OF FORM FIELDS */}
-            
+
             {/* START OF ACTION FORM BUTTON */}
             <div className="flex flex-row justify-start gap-3 mt-5">
               <button
@@ -152,7 +156,6 @@ export const PropertyComponent: React.FC = () => {
               </button>
             </div>
             {/* END OF ACTION FORM BUTTON */}
-
           </form>
           {/* END PROPERTY FORM */}
         </div>
@@ -168,6 +171,7 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     setLoader: (status: boolean) => void,
     setFormData: (data: PropertyRequestDto) => void,
     navigate: (value: any) => void,
+    setError: (value: any) => void,
     initialFormData: PropertyRequestDto
   ) {
     e.preventDefault();
@@ -179,24 +183,16 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         navigate(-1);
         setFormData(initialFormData);
       } else {
-        console.log("Error occured", HttpStatusCode.NotFound);
+        setError("Failed to Register Property");
       }
     } catch (error: any) {
-      // console.log('error :',error);
-
       if (typeof error?.response?.data !== "object") {
-        //   await notification(NotificationEnum.error, error?.response?.data);
+        setError(error?.response?.data);
       } else {
         if (error?.response?.data?.message !== undefined) {
-          // await notification(
-          //   NotificationEnum.error,
-          //   error?.response?.data?.message
-          // );
+          setError(error?.response?.data?.message);
         } else {
-          // await notification(
-          //   NotificationEnum.error,
-          //   error?.response?.data?.error
-          // );
+          setError(error?.response?.data?.error);
         }
       }
       setLoader(false);

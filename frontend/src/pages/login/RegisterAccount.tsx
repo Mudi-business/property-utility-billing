@@ -6,7 +6,7 @@ import { CREATE_USER } from "../../services/user";
 export const RegisterAccount: React.FC = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<string>("");
-  const [formLoader, setFormLoader] = React.useState<boolean>(false);
+  const [_, setFormLoader] = React.useState<boolean>(false);
   const handliOnClickCancel = () => setFormData(initialForm);
   const initialForm = {
     email: "",
@@ -172,7 +172,6 @@ export const RegisterAccount: React.FC = () => {
 function onSubmit(e: React.FormEvent<HTMLFormElement>) {
   return async function (
     data: UserRequestDto,
-    //   notification: (type: string, message: string) => any,
     setLoader: (status: boolean) => void,
     setFormData: (data: UserRequestDto) => void,
     navigate: (value: any) => void,
@@ -182,8 +181,6 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       setLoader(true);
-      console.log("body :", data);
-
       const response = await CREATE_USER({ data });
       const savedUser: UserDto = response.data;
       if (savedUser?.user_id !== undefined) {
@@ -191,27 +188,15 @@ function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         setFormData(initialFormData);
       } else {
         setError("User registration failed");
-        // console.log("Error occured", HttpStatusCode.NotFound);
       }
     } catch (error: any) {
-      // console.log('error :',error);
-
       if (typeof error?.response?.data !== "object") {
         setError(error?.response?.data);
-        //   await notification(NotificationEnum.error, error?.response?.data);
       } else {
         if (error?.response?.data?.message !== undefined) {
           setError(error?.response?.data?.message);
-          // await notification(
-          //   NotificationEnum.error,
-          //   error?.response?.data?.message
-          // );
         } else {
           setError(error?.response?.data?.error);
-          // await notification(
-          //   NotificationEnum.error,
-          //   error?.response?.data?.error
-          // );
         }
       }
       setLoader(false);

@@ -12,7 +12,7 @@ export const MainView: React.FC = () => {
           <SideBar />
         </ProtectedRoute>
       </div>
-      <div className="col-span-10 col-start-3">
+      <div className="col-span-10 col-start-3 overflow-y-auto">
         <ProtectedRoute>
           <Outlet />
         </ProtectedRoute>

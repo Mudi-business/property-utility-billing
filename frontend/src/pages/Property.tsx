@@ -82,7 +82,7 @@ export const Property: React.FC = () => {
         middleStack={
           <React.Fragment>
             <form>
-              <div className="flex flex-row justify-start gap-5">
+              <div className="flex md:flex-row sm:flex-col justify-start gap-5">
                 <div className="w-full max-w-sm min-w-[200px]">
                   <div className="relative flex items-center">
                     <svg
@@ -172,7 +172,10 @@ export const Property: React.FC = () => {
                 </button>
               </div>
             </form>
-            <div className="mt-3 relative flex flex-col w-full h-full overflow-auto text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
+            <div className="mt-5 relative flex flex-col w-full h-full overflow-auto text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
+              <p className="font-sans font-bold text-lg mt-2">
+                  Total Properties <span className="font-sans font-extrabold text-xl text-green-600">{formDataFilters.totalItems}</span>
+              </p>
               <table className="w-full text-left table-auto min-w-max text-slate-800">
                 <thead>
                   <tr className="text-slate-500 border-b border-slate-300 bg-slate-50">

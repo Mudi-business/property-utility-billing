@@ -29,7 +29,7 @@ export const SideBar: React.FC = () => {
   }
   return (
     <div className=" relative flex h-[calc(100vh)] w-full max-w-[20rem] flex-col bg-slate-900 bg-clip-border p-4 text-gray-700 opacity-80 shadow-lg shadow-blue-gray-900/5">
-      <div className=" hidden md:block p-4 mb-2 bg-white opacity-90 rounded-sm">
+      <div className=" hidden md:block p-4 mb-2 bg-white opacity-90 rounded-lg">
         <h5 className="block text-center font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-slate-900">
           PMS
         </h5>
@@ -101,7 +101,7 @@ export const SideBar: React.FC = () => {
               />
             </svg>
           </div>
-          Log Out
+          Logout
         </div>
       </nav>
 

@@ -302,12 +302,19 @@ export function Dashboard() {
         </div>
       }
       middleStack={
-        <div className="grid grid-cols-12 grid-rows-3 gap-4">
-          <div className="col-span-3"></div>
-          <div className="col-span-6 row-span-3 col-start-4">
-            <Bar options={options} data={data} />
+        <div className="relative flex flex-col justify-center p-16">
+          <div className="flex flex-row justify-center w-full">
+            <p className="text-center font-sans font-bold text-lg">
+              Visualization of Properties and Utility Bills{" "}
+            </p>
           </div>
-          <div className="col-span-3 col-start-10"></div>
+          <div className="grid grid-cols-12 grid-rows-3 gap-4">
+            <div className="col-span-3"></div>
+            <div className="col-span-6 row-span-3 col-start-4">
+              <Bar options={options} data={data} />
+            </div>
+            <div className="col-span-3 col-start-10"></div>
+          </div>
         </div>
       }
       bottomStack={<></>}

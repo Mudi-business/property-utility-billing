@@ -302,8 +302,12 @@ export function Dashboard() {
         </div>
       }
       middleStack={
-        <div className="flex flex-row justify-center p-16">
-          <Bar options={options} data={data} />
+        <div className="grid grid-cols-12 grid-rows-3 gap-4">
+          <div className="col-span-3"></div>
+          <div className="col-span-6 row-span-3 col-start-4">
+            <Bar options={options} data={data} />
+          </div>
+          <div className="col-span-3 col-start-10"></div>
         </div>
       }
       bottomStack={<></>}
